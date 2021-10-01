@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <%= link_to 'Books Store App', root_path, class:'navbar-brand'%>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <% if current_user %>
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <%= link_to 'My Books', '#', class: 'nav-link'%>
+                    </li>
+                    <li class="nav-item">
+                        <%= link_to 'Friends', '#', class: 'nav-link' %>
+                    </li>
+                    <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Profile
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <%= link_to edit_user_registration_path, class:"dropdown-item" do %>
+                            <%= fa_icon 'edit' %> Edit Profile
+                        <% end %>
+                    </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item mt-2 mr-0">
+                        <%= fa_icon 'user' %> <%= current_user.email %>
+                    </li>
+                    <li class="nav-item">
+                        <%= link_to 'LogOut', destroy_user_session_path, class: 'btn btn-danger mx-3', method: :delete %>
+                    </li>
+                </ul>
+            <% else %>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <%= link_to 'Sign In', new_user_session_path, class: "mr-3 nav-link text-white btn btn-primary" %>
+                    </li>
+                    <li class="nav-item">
+                        <%= link_to 'Sign Up', new_user_registration_path, class: "nav-link text-white btn btn-secondary" %>
+                    </li>
+                </ul>
+            <% end %> 
+        </div>
+    </div>
+</nav>
