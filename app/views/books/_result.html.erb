@@ -1,0 +1,41 @@
+<% if !@books.blank? %>
+    <% @books.each do |book|%>
+        <div class="card mb-3">
+            <div class="row no-gutters">
+                <div class="d-flex flex-column align-items-center justify-content-center col-md-3">
+                    <%= display_book_image(book["volumeInfo"]["imageLinks"], book["volumeInfo"]["title"]) %>
+                </div>
+                <div class="col-md-9">
+                    <div class="card-body text-justify">
+                        <h5 class="card-title"><span class="font-weight-bold">Title: </span> <%= display_book_text(book["volumeInfo"]["title"]) %> </h5>
+
+                        <p class="card-text"><span class="font-weight-bold">Rating: <span>
+                            <% if !book["volumeInfo"]["averageRating"].blank? %>
+                                <% book["volumeInfo"]["averageRating"].to_i.times do  %>
+                                    <span class="text-warning"><%= fa_icon 'star' %></span>
+                                <% end %>    
+                            <% else %>
+                                None
+                            <% end %>
+                        </p>
+
+                        <% if !book["volumeInfo"]["authors"].blank? && book["volumeInfo"]["authors"].any? %>
+                            <p class="card-text"><span class="font-weight-bold">Author(s): </span>
+                                <% book["volumeInfo"]["authors"].each do |author| %>
+                                    <%= author %> 
+                                <% end %>
+                            </p>
+                        <% end %>
+                        <p class="card-text"><span class="font-weight-bold">Description: </span> <%= display_book_text(book["volumeInfo"]["description"]) %> </p>
+                        <p class="card-text"><span class="font-weight-bold">Publisher: </span> <%= display_book_text(book["volumeInfo"]["publisher"]) %> </p>
+                        <p class="card-text"><span class="font-weight-bold">Published Date: </span> <%= display_book_text(book["volumeInfo"]["publishedDate"])%></p>
+                        <div class="d-flex justify-content-center">
+                            <%= link_to 'Preview', book["volumeInfo"]["previewLink"], class: "btn btn-link mx-2", target: :_blank %>
+                            <%= link_to 'Select', '#', class: "btn btn-success mx-2" %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% end %>
+<% end %>

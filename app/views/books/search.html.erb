@@ -1,0 +1,17 @@
+<h3 class="mb-4">Search Books</h3>
+
+<%= form_with url: serve_book_search_path, method: :get, local: false do |f| %>
+
+    <div class="input-group mb-3">
+        <%= f.text_field :book, placeholder: "Book's search terms", autofocus:true, id:"search-input", class: 'form-control' %>
+        <div class="input-group-append">
+            <%= button_tag type: :submit, class: "btn btn-success", id:"button-addon2" do %>
+                <%= fa_icon 'search' %> 
+            <% end %>
+        </div>
+    </div>
+
+<% end %>
+
+<div id="books-results">
+</div>

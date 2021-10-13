@@ -1,0 +1,13 @@
+en:
+  error_messages:
+
+    # Google API
+    blank_argument:
+      code: 101
+      title: "Enter something to search"
+    # Books
+    book_not_found:
+      code: 20101
+      title: "Could not find book"
+      detail: "This book does not exist, or has been deleted. Book can be removed by admins."
+    
