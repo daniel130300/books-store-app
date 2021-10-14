@@ -3,19 +3,6 @@ class BooksController < ApplicationController
 
   rescue_from ApiExceptions::BaseException, :with => :render_error_response
 
-  # #APIS ERROR HANDLING
-  # rescue_from Errors::HttpartyError do |e|
-  #   format_error :internal_server_error, :bad_request
-  # end
-
-  # rescue_from Errors::StandardApiError do |e|
-  #   format_error :not_found, :standard_error
-  # end
-
-  # rescue_from ArgumentError do |e|
-  #   format_error :bad_request, :blank_argument
-  # end
-
   def index
     @books = Book.all
   end
@@ -61,7 +48,7 @@ class BooksController < ApplicationController
   end
 
   def book_to_add
-    @book = Apis::GoogleApi::SearchBooks.volume(params[:id])  
+    @book = Apis::GoogleApi::SearchNewBook.new(params[:id]).book
   end
 
   def serve_search 
