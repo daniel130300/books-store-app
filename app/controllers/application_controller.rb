@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
     before_action :authenticate_user!
 
-    def show_errors(status, error_code, extra = {})
+    def format_error(status, error_code, extra = {})
         @errors = []
         status = Rack::Utils::SYMBOL_TO_STATUS_CODE[status] if status.is_a? Symbol
 
@@ -14,12 +14,12 @@ class ApplicationController < ActionController::Base
         detail = I18n.t("error_messages.#{error_code}.detail", default: '')
         error[:detail] = detail unless detail.empty?
         @errors.append(error)
-        render_errors
+        render_error()
     end
 
     private 
 
-    def render_errors 
+    def render_error
         respond_to do |format|
             format.js { render partial: 'books/error' }
         end

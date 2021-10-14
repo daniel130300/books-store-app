@@ -2,15 +2,15 @@ class BooksController < ApplicationController
   before_action :set_book, only: [ :show, :edit, :update, :destroy ]
 
   rescue_from Errors::HttpartyError do |e|
-    show_errors :internal_server_error, :bad_request
+    format_error :internal_server_error, :bad_request
   end
 
   rescue_from Errors::StandardApiError do |e|
-    show_errors :not_found, :standard_error
+    format_error :not_found, :standard_error
   end
 
   rescue_from ArgumentError do |e|
-    show_errors :bad_request, :blank_argument
+    format_error :bad_request, :blank_argument
   end
 
   def index
@@ -58,14 +58,19 @@ class BooksController < ApplicationController
   end
 
   def book_to_add
-    @book = Apis::GoogleApi::SearchBooks.volume(params[:id])
-    p @book
+    @book = Apis::GoogleApi::SearchBooks.volume(params[:id])  
+    respond_to do |format|
+      if !@book.blank?
+        format.html
+        format.js
+      end
+    end    
   end
 
   def serve_search 
     @books = Apis::GoogleApi::SearchBooks.volumes(params[:book])
-    if !@books.blank?
-      respond_to do |format|
+    respond_to do |format|
+      if !@books.blank?
         format.js { render partial: 'books/result' }
       end
     end    

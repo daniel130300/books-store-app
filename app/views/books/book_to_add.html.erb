@@ -8,32 +8,13 @@
         <div class="col-md-9">
             <div class="card-body text-justify">
                 <h5 class="card-title"><span class="font-weight-bold">Title: </span> <%= display_book_text(@book["volumeInfo"]["title"]) %> </h5>
-
-                <p class="card-text"><span class="font-weight-bold">Rating: <span>
-                    <% if !@book["volumeInfo"]["averageRating"].blank? %>
-                        <% @book["volumeInfo"]["averageRating"].to_i.times do  %>
-                            <span class="text-warning"><%= fa_icon 'star' %></span>
-                        <% end %>    
-                    <% else %>
-                        None
-                    <% end %>
-                </p>
-
-                <% if !@book["volumeInfo"]["authors"].blank? && @book["volumeInfo"]["authors"].any? %>
-                    <p class="card-text"><span class="font-weight-bold">Author(s): </span>
-                        <% @book["volumeInfo"]["authors"].each do |author| %>
-                            <%= author %> 
-                        <% end %>
-                    </p>
-                <% end %>
-
+                <%= render 'rating', obj:@book["volumeInfo"]["averageRating"]%>
+                <%= render 'authors', obj:@book["volumeInfo"]["authors"]%>
                 <p class="card-text"><span class="font-weight-bold">Description: </span> <%= display_book_text(@book["volumeInfo"]["description"]) %> </p>
-
                 <div class="d-flex justify-content-between">
                     <p class="card-text"><span class="font-weight-bold">Publisher: </span> <%= display_book_text(@book["volumeInfo"]["publisher"]) %> </p>
                     <p class="card-text"><span class="font-weight-bold">Published Date: </span> <%= display_book_text(@book["volumeInfo"]["publishedDate"])%></p>
                 </div>
-
                 <div class="d-flex flex-column justify-content-center align-items-center my-2">
                     <%= form_with(url: "/posts") do |f| %>
                         <div class="form-group row">
@@ -71,7 +52,6 @@
                         </div>
                     <% end %>
                 </div>
-
             </div>
         </div>
     </div>
