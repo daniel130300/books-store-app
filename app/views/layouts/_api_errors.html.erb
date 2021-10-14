@@ -1,10 +1,8 @@
-<% if @errors.any? %>
-    <% @errors.each do |error| %>
+<% if !@error.blank?%>
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        status: <%= error[:status]%>, code: <%= error[:code]%>, message: <%= error[:title]%>
+        code: <%= @error.code%>, message: <%= @error.message %>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <% end %>
 <% end %>
