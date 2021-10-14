@@ -1,13 +1,21 @@
 en:
   error_messages:
-
-    # Google API
+    #General API Errors
     blank_argument:
-      code: 101
+      code: 1001
       title: "Enter something to search"
-    # Books
+
+    bad_request:
+      code: 1002
+      title: "API couldn't be called"
+
+    standard_error:
+      code: 1003
+      title: "No results found"
+    
+    # Active Record Books
     book_not_found:
-      code: 20101
+      code: 3001
       title: "Could not find book"
       detail: "This book does not exist, or has been deleted. Book can be removed by admins."
     

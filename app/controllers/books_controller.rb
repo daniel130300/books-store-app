@@ -1,13 +1,16 @@
 class BooksController < ApplicationController
   before_action :set_book, only: [ :show, :edit, :update, :destroy ]
 
-  rescue_from ActiveRecord::RecordNotFound do |e|
-    @errors = add_error :not_found, :book_not_found
+  rescue_from Errors::HttpartyError do |e|
+    show_errors :internal_server_error, :bad_request
+  end
+
+  rescue_from Errors::StandardApiError do |e|
+    show_errors :not_found, :standard_error
   end
 
   rescue_from ArgumentError do |e|
-    @errors = add_error :no_content, :blank_argument
-    render(partial: 'books/error', format: :js)
+    show_errors :bad_request, :blank_argument
   end
 
   def index
@@ -54,33 +57,18 @@ class BooksController < ApplicationController
   def search
   end
 
+  def book_to_add
+    @book = Apis::GoogleApi::SearchBooks.volume(params[:id])
+    p @book
+  end
+
   def serve_search 
-    #@books = Services::GoogleServices::SearchBooks.call(params[:book])
-    @errors = []
     @books = Apis::GoogleApi::SearchBooks.volumes(params[:book])
-    respond_to do |format|
-      format.js { render partial: 'books/result' }
-    end
-    
-    # if params[:book].present?
-    #   @books = Book.search(params[:book]) 
-    #   if @books
-    #     respond_to do |format|
-    #       format.js { render partial: 'books/result' }
-    #     end
-    #   elsif @books.blank?
-    #     flash.now[:alert] = "No results found"
-    #     respond_to do |format|
-    #       format.js { render partial: 'books/result' }
-    #     end
-    #   end
-    # else
-    #   flash.now[:alert] = "Please enter something"
-    #   respond_to do |format|
-    #     format.js { render partial: 'books/result' }
-    #   end
-    # end
-    
+    if !@books.blank?
+      respond_to do |format|
+        format.js { render partial: 'books/result' }
+      end
+    end    
   end
 
   private

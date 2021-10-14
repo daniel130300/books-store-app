@@ -1,1 +1,1 @@
-alert('new error');
+document.querySelector('#errors').innerHTML = "<%= j render(partial: 'layouts/errors', formats: [:html]) %>"

@@ -26,12 +26,17 @@
                                 <% end %>
                             </p>
                         <% end %>
+
                         <p class="card-text"><span class="font-weight-bold">Description: </span> <%= display_book_text(book["volumeInfo"]["description"]) %> </p>
-                        <p class="card-text"><span class="font-weight-bold">Publisher: </span> <%= display_book_text(book["volumeInfo"]["publisher"]) %> </p>
-                        <p class="card-text"><span class="font-weight-bold">Published Date: </span> <%= display_book_text(book["volumeInfo"]["publishedDate"])%></p>
+
+                        <div class="d-flex justify-content-between">
+                            <p class="card-text"><span class="font-weight-bold">Publisher: </span> <%= display_book_text(book["volumeInfo"]["publisher"]) %> </p>
+                            <p class="card-text"><span class="font-weight-bold">Published Date: </span> <%= display_book_text(book["volumeInfo"]["publishedDate"])%></p>
+                        </div>
+
                         <div class="d-flex justify-content-center">
                             <%= link_to 'Preview', book["volumeInfo"]["previewLink"], class: "btn btn-link mx-2", target: :_blank %>
-                            <%= link_to 'Select', '#', class: "btn btn-success mx-2" %>
+                            <%= link_to 'Select', book_to_add_path(id: book["id"]), class: "btn btn-success mx-2" %>
                         </div>
                     </div>
                 </div>
