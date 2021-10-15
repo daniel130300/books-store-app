@@ -1,5 +1,4 @@
 module Exceptions
-  module ApiExceptions
     class BaseException < StandardError
       include ActiveModel::Serialization
       attr_reader :status, :code, :message
@@ -8,16 +7,21 @@ module Exceptions
 
       ERROR_CODE_MAP = {
         "BookError::MissingSearchTerms" =>
-          ERROR_DESCRIPTION.call(1000, "Can't find books without search terms")
+          ERROR_DESCRIPTION.call(1000, "Can't find books without search terms"),
+        "HttpartyError::NoResponse" =>
+          ERROR_DESCRIPTION.call(2000, "Couldn't get any response from the server"),
+        "HttpartyError::NotFound" =>
+          ERROR_DESCRIPTION.call(2001, "Request couldn't be found"),
+        "HttpartyError::SomethingWentWrong" =>
+          ERROR_DESCRIPTION.call(2002, "Ooopss.... something went wrong")
       }
 
       def initialize
         error_type = self.class.name.scan(/ApiExceptions::(.*)/).flatten.first
-        ApiExceptions::BaseException::ERROR_CODE_MAP
+        Exceptions::BaseException::ERROR_CODE_MAP
           .fetch(error_type, {}).each do |attr, value|
             instance_variable_set("@#{attr}".to_sym, value)
         end
       end
     end
-  end
 end

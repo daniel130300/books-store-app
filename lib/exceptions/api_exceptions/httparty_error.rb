@@ -1,6 +1,6 @@
 module Exceptions
     module ApiExceptions 
-        class BookError < Exceptions::BaseException
+        class HttpartyError < Exceptions::BaseException
         end
     end
 end

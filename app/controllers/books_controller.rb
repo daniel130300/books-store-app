@@ -1,7 +1,7 @@
 class BooksController < ApplicationController
   before_action :set_book, only: [ :show, :edit, :update, :destroy ]
 
-  rescue_from ApiExceptions::BaseException, :with => :render_error_response
+  rescue_from Exceptions::BaseException, :with => :render_error_response
 
   def index
     @books = Book.all
@@ -47,17 +47,21 @@ class BooksController < ApplicationController
   def search
   end
 
-  def book_to_add
-    @book = Apis::GoogleApi::SearchNewBook.new(params[:id]).book
+  def serve_search 
+    @books = Apis::GoogleApi::SearchBooks.volumes(params[:book])
+    respond_to do |format|
+      format.js { render partial: 'books/search_result' }
+    end    
   end
 
-  def serve_search 
-    @books = Apis::GoogleApi::SearchNewBooks.new(params[:book]).books
-    respond_to do |format|
-      if !@books.blank?
-        format.js { render partial: 'books/search_result' }
-      end
-    end    
+  def book_to_add
+    @book_model = Book.new
+    @book = Apis::GoogleApi::SearchBooks.volume(params[:id])
+  end
+
+  def add_book
+    @book = Apis::GoogleApi::SearchBooks.volume(params[:id])
+    book_params
   end
 
   private
@@ -65,7 +69,14 @@ class BooksController < ApplicationController
       @book = Book.find(params[:id])
     end
 
-    def book_params
-      params.require(:book).permit(:title)
+    def add_book_params
+      params.require(:book).permit(:quantity, :purchase_price, :sale_price)
+    end
+
+    def render_error_response(error)
+      @error = error 
+      respond_to do |format|
+          format.js { render partial: 'books/api_error' }
+      end
     end
 end
