@@ -4,6 +4,16 @@
   <%= bootstrap_devise_error_messages! %>
 
   <div class="form-group">
+    <%= f.label :fullname %>
+    <%= f.text_field :fullname, autofocus: true, class: 'form-control' %>
+  </div>
+
+   <div class="form-group">
+    <%= f.label :birth_date %>
+    <%= f.date_field :birth_date, autofocus: true, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :email %>
     <%= f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-control' %>
   </div>
