@@ -48,7 +48,7 @@ class BooksController < ApplicationController
   end
 
   def serve_search 
-    @books = Apis::GoogleApi::SearchBooks.volumes(params[:book])
+    @api_books = Apis::GoogleApi::SearchBooks.volumes(params[:book])
     respond_to do |format|
       format.js { render partial: 'books/search_result' }
     end    
@@ -56,7 +56,7 @@ class BooksController < ApplicationController
 
   def book_to_add
     @book_model = Book.new
-    @book = Apis::GoogleApi::SearchBooks.volume(params[:id])
+    @api_book = Apis::GoogleApi::SearchBooks.volume(params[:id])
   end
 
   def add_book
@@ -65,7 +65,7 @@ class BooksController < ApplicationController
       flash[:notice] = "Book was added successfully"
       redirect_to @book_model
     else 
-      redirect_to book_to_add_path(id:params[:book][:id])
+      render 'book_to_add'
     end 
   end
 

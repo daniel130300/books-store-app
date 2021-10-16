@@ -1,29 +1,29 @@
-<% if !@book.blank? %>
+<% if !@api_book.blank? %>
     <div class="card mb-3">
         <div class="row no-gutters">
             <div class="d-flex flex-column align-items-center justify-content-center col-md-3">
-                <img src=<%= book_image_url(@book["volumeInfo"]["imageLinks"])%>, alt=<%= book_text(@book["volumeInfo"]["title"])%>>
+                <img src=<%= book_image_url(@api_book["volumeInfo"]["imageLinks"])%>, alt=<%= book_text(@api_book["volumeInfo"]["title"])%>>
             </div>
             <div class="col-md-9">
                 <div class="card-body text-justify">
-                    <h5 class="card-title"><span class="font-weight-bold">Title: </span> <%= book_text(@book["volumeInfo"]["title"]) %> </h5>
-                    <%= render 'rating', obj:@book["volumeInfo"]["averageRating"]%>
-                    <%= render 'authors', obj:@book["volumeInfo"]["authors"]%>
-                    <p class="card-text"><span class="font-weight-bold">Description: </span> <%= book_text(@book["volumeInfo"]["description"]) %> </p>
+                    <h5 class="card-title"><span class="font-weight-bold">Title: </span> <%= book_text(@api_book["volumeInfo"]["title"]) %> </h5>
+                    <%= render 'rating', obj:@api_book["volumeInfo"]["averageRating"]%>
+                    <%= render 'authors', obj:@api_book["volumeInfo"]["authors"]%>
+                    <p class="card-text"><span class="font-weight-bold">Description: </span> <%= book_text(@api_book["volumeInfo"]["description"]) %> </p>
                     <div class="d-flex justify-content-between">
-                        <p class="card-text"><span class="font-weight-bold">Publisher: </span> <%= book_text(@book["volumeInfo"]["publisher"]) %> </p>
-                        <p class="card-text"><span class="font-weight-bold">Published Date: </span> <%= book_text(@book["volumeInfo"]["publishedDate"])%></p>
+                        <p class="card-text"><span class="font-weight-bold">Publisher: </span> <%= book_text(@api_book["volumeInfo"]["publisher"]) %> </p>
+                        <p class="card-text"><span class="font-weight-bold">Published Date: </span> <%= book_text(@api_book["volumeInfo"]["publishedDate"])%></p>
                     </div>
                     <div class="d-flex flex-column justify-content-center align-items-center my-2">
                         <%= form_with(model: @book_model, url: add_book_path) do |f| %>
-                            <%= f.hidden_field :id, value: @book["id"] %>
-                            <%= f.hidden_field :title, value: book_text(@book["volumeInfo"]["title"]) %>
-                            <%= f.hidden_field :description, value: book_text(@book["volumeInfo"]["description"]) %>
-                            <%= f.hidden_field :image_link, value: book_image_url(@book["volumeInfo"]["imageLinks"]) %>
-                            <%= f.hidden_field :average_rating, value: book_text(@book["volumeInfo"]["average_rating"]) %>
-                            <%= f.hidden_field :publisher, value: book_text(@book["volumeInfo"]["publisher"]) %>
-                            <%= f.hidden_field :published_date, value: book_text(@book["volumeInfo"]["publishedDate"]) %>
-                            <%= f.hidden_field :preview_link, value: book_text(@book["volumeInfo"]["previewLink"]) %>
+                            <%= f.hidden_field :id, value: @api_book["id"] %>
+                            <%= f.hidden_field :title, value: book_text(@api_book["volumeInfo"]["title"]) %>
+                            <%= f.hidden_field :description, value: book_text(@api_book["volumeInfo"]["description"]) %>
+                            <%= f.hidden_field :image_link, value: book_image_url(@api_book["volumeInfo"]["imageLinks"]) %>
+                            <%= f.hidden_field :average_rating, value: book_text(@api_book["volumeInfo"]["average_rating"]) %>
+                            <%= f.hidden_field :publisher, value: book_text(@api_book["volumeInfo"]["publisher"]) %>
+                            <%= f.hidden_field :published_date, value: book_text(@api_book["volumeInfo"]["publishedDate"]) %>
+                            <%= f.hidden_field :preview_link, value: book_text(@api_book["volumeInfo"]["previewLink"]) %>
 
                             <div class="form-group row">
                                 <div class="col-sm-5">
@@ -64,6 +64,7 @@
             </div>
         </div>
     </div>
+    <%= render 'shared/form_errors', obj: @book_model %>
 <% else %>
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         Nothing found 

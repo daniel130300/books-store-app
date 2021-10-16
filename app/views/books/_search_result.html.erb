@@ -1,19 +1,19 @@
-<% if !@books.blank? %>
-    <% @books.each do |book|%>
+<% if !@api_books.blank? %>
+    <% @api_books.each do |book|%>
         <div class="card mb-3">
             <div class="row no-gutters">
                 <div class="d-flex flex-column align-items-center justify-content-center col-md-3">
-                    <%= display_book_image(book["volumeInfo"]["imageLinks"], book["volumeInfo"]["title"]) %>
+                    <img src=<%= book_image_url(book["volumeInfo"]["imageLinks"])%>, alt=<%= book_text(book["volumeInfo"]["title"])%>>
                 </div>
                 <div class="col-md-9">
                     <div class="card-body text-justify">
-                        <h5 class="card-title"><span class="font-weight-bold">Title: </span> <%= display_book_text(book["volumeInfo"]["title"]) %> </h5>
+                        <h5 class="card-title"><span class="font-weight-bold">Title: </span> <%= book_text(book["volumeInfo"]["title"]) %> </h5>
                         <%= render 'rating', obj:book["volumeInfo"]["averageRating"]%>
                         <%= render 'authors', obj: book["volumeInfo"]["authors"]%>
-                        <p class="card-text"><span class="font-weight-bold">Description: </span> <%= display_book_text(book["volumeInfo"]["description"]) %> </p>
+                        <p class="card-text"><span class="font-weight-bold">Description: </span> <%= book_text(book["volumeInfo"]["description"]) %> </p>
                         <div class="d-flex justify-content-between">
-                            <p class="card-text"><span class="font-weight-bold">Publisher: </span> <%= display_book_text(book["volumeInfo"]["publisher"]) %> </p>
-                            <p class="card-text"><span class="font-weight-bold">Published Date: </span> <%= display_book_text(book["volumeInfo"]["publishedDate"])%></p>
+                            <p class="card-text"><span class="font-weight-bold">Publisher: </span> <%= book_text(book["volumeInfo"]["publisher"]) %> </p>
+                            <p class="card-text"><span class="font-weight-bold">Published Date: </span> <%= book_text(book["volumeInfo"]["publishedDate"])%></p>
                         </div>
                         <div class="d-flex justify-content-center">
                             <%= link_to 'Preview', book["volumeInfo"]["previewLink"], class: "btn btn-link mx-2", target: :_blank %>
