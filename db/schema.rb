@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_15_190021) do
+ActiveRecord::Schema.define(version: 2021_10_16_000112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2021_10_15_190021) do
     t.string "image_link"
     t.integer "average_rating"
     t.string "publisher"
-    t.date "published_date"
+    t.string "published_date"
     t.string "preview_link"
     t.integer "quantity"
     t.decimal "purchase_price"

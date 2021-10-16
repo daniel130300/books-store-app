@@ -16,10 +16,14 @@
                     </div>
                     <div class="d-flex flex-column justify-content-center align-items-center my-2">
                         <%= form_with(model: @book_model, url: add_book_path) do |f| %>
-
+                            <%= f.hidden_field :id, value: @book["id"] %>
                             <%= f.hidden_field :title, value: book_text(@book["volumeInfo"]["title"]) %>
                             <%= f.hidden_field :description, value: book_text(@book["volumeInfo"]["description"]) %>
-                            <%= f.hidden_field :description, value: book_text(@book["volumeInfo"]["averageRating"]) %>
+                            <%= f.hidden_field :image_link, value: book_image_url(@book["volumeInfo"]["imageLinks"]) %>
+                            <%= f.hidden_field :average_rating, value: book_text(@book["volumeInfo"]["average_rating"]) %>
+                            <%= f.hidden_field :publisher, value: book_text(@book["volumeInfo"]["publisher"]) %>
+                            <%= f.hidden_field :published_date, value: book_text(@book["volumeInfo"]["publishedDate"]) %>
+                            <%= f.hidden_field :preview_link, value: book_text(@book["volumeInfo"]["previewLink"]) %>
 
                             <div class="form-group row">
                                 <div class="col-sm-5">
@@ -43,11 +47,11 @@
 
                             <div class="form-group row">
                                 <div class="col-sm-5">
-                                    <%= f.label :stock, 'Stock:', class: "form-label font-weight-bold" %>
+                                    <%= f.label :quantity, 'Stock:', class: "form-label font-weight-bold" %>
                                 </div>
 
                                 <div class="col-sm-7">
-                                    <%= f.number_field :stock, class: "form-control"%>
+                                    <%= f.number_field :quantity, class: "form-control"%>
                                 </div>
                             </div>
                             
