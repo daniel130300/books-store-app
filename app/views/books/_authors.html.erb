@@ -1,7 +1,7 @@
  <% if !obj.blank? && obj.any? %>
     <p class="card-text"><span class="font-weight-bold">Author(s): </span>
-        <% obj.each do |author| %>
-            <%= author %> 
-        <% end %>
+        <%= obj.join(", ") %>
     </p>
+<% else %>
+    <p class="card-text"><span class="font-weight-bold">Author: </span> None</p>
 <% end %>

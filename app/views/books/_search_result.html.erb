@@ -12,12 +12,16 @@
                         <%= render 'authors', obj: book["volumeInfo"]["authors"]%>
                         <p class="card-text"><span class="font-weight-bold">Description: </span> <%= book_text(book["volumeInfo"]["description"]) %> </p>
                         <div class="d-flex justify-content-between">
-                            <p class="card-text"><span class="font-weight-bold">Publisher: </span> <%= book_text(book["volumeInfo"]["publisher"]) %> </p>
+                            <p class="card-text"><span class="font-weight-bold mr-2">Publisher: </span> <%= book_text(book["volumeInfo"]["publisher"]) %> </p>
                             <p class="card-text"><span class="font-weight-bold">Published Date: </span> <%= book_text(book["volumeInfo"]["publishedDate"])%></p>
                         </div>
                         <div class="d-flex justify-content-center">
                             <%= link_to 'Preview', book["volumeInfo"]["previewLink"], class: "btn btn-link mx-2", target: :_blank %>
-                            <%= link_to 'Select', book_to_add_path(id: book["id"]), class: "btn btn-success mx-2" %>
+                            <% if !Book.check_book(book["id"]) %>
+                                <%= link_to 'Select', book_to_add_path(id: book["id"]), class: "btn btn-success mx-2" %>
+                            <% else %>
+                                <span class="badge badge-pill badge-secondary"><p class="pt-3 pb-0">You have already added this book</p></span>
+                            <% end %>
                         </div>
                     </div>
                 </div>

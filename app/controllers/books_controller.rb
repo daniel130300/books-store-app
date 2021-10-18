@@ -60,12 +60,14 @@ class BooksController < ApplicationController
   end
 
   def add_book
+    sanitize_params
     @book_model = Book.new(book_params)
     if @book_model.save
       flash[:notice] = "Book was added successfully"
       redirect_to @book_model
     else 
-      render 'book_to_add'
+      @api_book = Apis::GoogleApi::SearchBooks.volume(params[:id])
+      render 'book_to_add' 
     end 
   end
 
@@ -75,11 +77,14 @@ class BooksController < ApplicationController
     end
 
     def book_params
-      sanitize_params
-      params.require(:book).permit(:id, :title, :description, :image_link, :average_rating, :publisher, :published_date, :preview_link, :quantity, :purchase_price, :sale_price)
+      params.require(:book).permit(:id, :title, :description, :image_link, :average_rating, :publisher, :published_date, :preview_link, :quantity, :purchase_price, :sale_price, :external_id)
     end
 
     def sanitize_params
+      params[:title] = params[:title].titleize
+      params[:quantity] = params[:quantity].to_i
+      params[:purchase_price] = params[:purchase_price].to_f
+      params[:sale_price] = params[:sale_price].to_f
       params[:average_rating] = params[:average_rating] == "None" ? nil : params[:average_rating].to_i
     end
 
