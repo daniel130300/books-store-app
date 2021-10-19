@@ -1,4 +1,4 @@
-<% if @friends && !@friends.empty? %>
+<% if !@friends.blank? && @friends.any? %>
     <div class="card card-header results-block mb-3">
         <table class="col-md-12">
             <tbody class="table table-borderless">
@@ -20,5 +20,12 @@
                 <% end %>
             </tbody>
         </table>        
+    </div>
+<% else %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        Nothing found 
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
 <% end %>

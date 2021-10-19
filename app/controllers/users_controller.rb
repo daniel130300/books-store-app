@@ -12,21 +12,18 @@ class UsersController < ApplicationController
   
     def search
         @friends = User.search(current_user.id, params[:friend]) 
-
-        p @friends
-
         respond_to do |format|
-            format.js { render partial: 'users/friend_result' }
+          format.js { render partial: 'users/friend_result' }
         end
     end
 
     private
-    
+
     def render_error_response(error)
-        @error = error 
-        respond_to do |format|
-          format.js { render partial: 'shared/ajax_error' }
-        end
+      @error = error 
+      respond_to do |format|
+        format.js { render partial: 'shared/ajax_error' }
+      end
     end
 end
   

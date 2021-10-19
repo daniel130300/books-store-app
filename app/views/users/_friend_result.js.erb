@@ -1,1 +1,1 @@
-document.querySelector('#friend-result').innerHTML = "<%= j render 'users/friend_result.html' %>"
+document.querySelector('#friend-result').innerHTML = "<%= j render(partial: 'users/friend_result', formats: [:html]) %>"

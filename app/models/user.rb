@@ -15,7 +15,7 @@ class User < ApplicationRecord
     raise Exceptions::ApiExceptions::FriendError::MissingSearchTerms if search.blank?
     search.strip!
     user = self.where.not(id: id).and(self.where("email like ?", "%#{search}%").or(self.where("fullname like ?", "%#{search}%")))
-    return nil unless user
+    return user
   end
 
   def not_friends_with?(id_of_friend)
