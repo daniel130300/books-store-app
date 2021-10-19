@@ -16,7 +16,7 @@
                     </div>
                     <div class="d-flex flex-column justify-content-center align-items-center my-2">
                         <%= form_with(model: @book_model, url: add_book_path(params[:id])) do |f| %>
-                            <%= f.hidden_field :id, value: @api_book["id"] %>
+                            <%= f.hidden_field :external_id, value: @api_book["id"] %>
                             <%= f.hidden_field :title, value: book_text(@api_book["volumeInfo"]["title"]) %>
                             <%= f.hidden_field :description, value: book_text(@api_book["volumeInfo"]["description"]) %>
                             <%= f.hidden_field :image_link, value: book_image_url(@api_book["volumeInfo"]["imageLinks"]) %>
@@ -25,7 +25,9 @@
                             <%= f.hidden_field :published_date, value: book_text(@api_book["volumeInfo"]["publishedDate"]) %>
                             <%= f.hidden_field :preview_link, value: book_text(@api_book["volumeInfo"]["previewLink"]) %>
 
-                            
+                            <%= fields_for :author, @book_model.authors do |f_author| %>
+                                <%= f_author.hidden_field :full_names, value: format_authors(@api_book["volumeInfo"]["authors"])%>
+                            <% end %>
 
                             <div class="form-group row">
                                 <div class="col-sm-5">

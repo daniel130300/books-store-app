@@ -9,4 +9,8 @@ module ApplicationHelper
         text.present? ? truncate(text, :length => 300) : "None"
     end
 
+    def format_authors(authors)
+        authors.blank? ? nil : authors.join(", ")
+    end
+
 end

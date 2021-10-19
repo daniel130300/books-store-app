@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :books
+  resources :books, except: [:new, :create]
   root 'welcome#index'
   get 'search_book', to: 'books#search'
   get 'serve_book_search', to: 'books#serve_search'

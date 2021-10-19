@@ -1,6 +1,5 @@
 class BooksController < ApplicationController
   before_action :set_book, only: [ :show, :edit, :update, :destroy ]
-
   rescue_from Exceptions::BaseException, :with => :render_error_response
 
   def index
@@ -49,6 +48,11 @@ class BooksController < ApplicationController
 
   def serve_search 
     @api_books = Apis::GoogleApi::SearchBooks.volumes(params[:book])
+
+    @api_books.each do |book|
+      book["already_added"] = !Book.check_book(book["id"])
+    end
+
     respond_to do |format|
       format.js { render partial: 'books/search_result' }
     end    
@@ -62,6 +66,12 @@ class BooksController < ApplicationController
   def add_book
     sanitize_params
     @book_model = Book.new(book_params)
+    if !params[:author][:full_names].blank?
+      params[:author][:full_names].each do |full_name|
+        BookAuthor.add_author_to_book(full_name.titleize, @book_model)
+      end
+    end
+
     if @book_model.save
       flash[:notice] = "Book was added successfully"
       redirect_to @book_model
@@ -81,17 +91,18 @@ class BooksController < ApplicationController
     end
 
     def sanitize_params
-      params[:title] = params[:title].titleize
-      params[:quantity] = params[:quantity].to_i
-      params[:purchase_price] = params[:purchase_price].to_f
-      params[:sale_price] = params[:sale_price].to_f
-      params[:average_rating] = params[:average_rating] == "None" ? nil : params[:average_rating].to_i
+      params[:book][:title] = params[:book][:title].titleize
+      params[:book][:quantity] = params[:book][:quantity].to_i
+      params[:book][:purchase_price] = params[:book][:purchase_price].to_f
+      params[:book][:sale_price] = params[:book][:sale_price].to_f
+      params[:book][:average_rating] = params[:book][:average_rating] == "None" ? nil : params[:book][:average_rating].to_i
+      params[:author][:full_names] = params[:author][:full_names] == "None" ? "Anonymous" : params[:author][:full_names].split(", ")
     end
 
     def render_error_response(error)
       @error = error 
       respond_to do |format|
-          format.js { render partial: 'books/api_error' }
+        format.js { render partial: 'books/api_error' }
       end
     end
 end

@@ -1,5 +1,5 @@
 <% if !@api_books.blank? %>
-    <% @api_books.each do |book|%>
+    <% @api_books.each do |book| %>
         <div class="card mb-3">
             <div class="row no-gutters">
                 <div class="d-flex flex-column align-items-center justify-content-center col-md-3">
@@ -17,7 +17,7 @@
                         </div>
                         <div class="d-flex justify-content-center">
                             <%= link_to 'Preview', book["volumeInfo"]["previewLink"], class: "btn btn-link mx-2", target: :_blank %>
-                            <% if !Book.check_book(book["id"]) %>
+                            <% if book["already_added"] %>
                                 <%= link_to 'Select', book_to_add_path(id: book["id"]), class: "btn btn-success mx-2" %>
                             <% else %>
                                 <span class="badge badge-pill badge-secondary"><p class="pt-3 pb-0">You have already added this book</p></span>

@@ -7,8 +7,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <% if current_user %>
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <%= link_to 'My Books', '#', class: 'nav-link'%>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Books
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <%= link_to 'All Books', books_path, class:"dropdown-item" %>
+                        </div>
                     </li>
                     <li class="nav-item">
                         <%= link_to 'Friends', '#', class: 'nav-link' %>

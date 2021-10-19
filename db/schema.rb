@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_18_171556) do
+ActiveRecord::Schema.define(version: 2021_10_18_183953) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,10 +20,10 @@ ActiveRecord::Schema.define(version: 2021_10_18_171556) do
   end
 
   create_table "book_authors", force: :cascade do |t|
-    t.bigint "books_id", null: false
-    t.bigint "authors_id", null: false
-    t.index ["authors_id"], name: "index_book_authors_on_authors_id"
-    t.index ["books_id"], name: "index_book_authors_on_books_id"
+    t.bigint "book_id", null: false
+    t.bigint "author_id", null: false
+    t.index ["author_id"], name: "index_book_authors_on_author_id"
+    t.index ["book_id"], name: "index_book_authors_on_book_id"
   end
 
   create_table "books", force: :cascade do |t|
@@ -55,6 +55,6 @@ ActiveRecord::Schema.define(version: 2021_10_18_171556) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "book_authors", "authors", column: "authors_id"
-  add_foreign_key "book_authors", "books", column: "books_id"
+  add_foreign_key "book_authors", "authors"
+  add_foreign_key "book_authors", "books"
 end
