@@ -4,6 +4,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_one :address
+  has_many :friendships
+  has_many :friends, through: :friendships
+
   validates_presence_of :fullname
   validates_presence_of :birth_date 
 end

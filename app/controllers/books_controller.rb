@@ -3,7 +3,7 @@ class BooksController < ApplicationController
   rescue_from Exceptions::BaseException, :with => :render_error_response
 
   def index
-    @books = Book.all
+    @books = Book.paginate(page: params[:page], per_page: 5)
   end
 
   def show
