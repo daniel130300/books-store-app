@@ -64,14 +64,15 @@ class BooksController < ApplicationController
   end
 
   def add_book
+    params
     sanitize_params
     @book_model = Book.new(book_params)
     if !params[:author][:full_names].blank?
       params[:author][:full_names].each do |full_name|
-        BookAuthor.add_author_to_book(full_name.titleize, @book_model)
+        author = Author.where(full_name: full_name.titleize).first_or_create(full_name: full_name.titleize)
+        @book_model.authors << author
       end
     end
-
     if @book_model.save
       flash[:notice] = "Book was added successfully"
       redirect_to @book_model
@@ -95,7 +96,7 @@ class BooksController < ApplicationController
       params[:book][:quantity] = params[:book][:quantity].to_i
       params[:book][:purchase_price] = params[:book][:purchase_price].to_f
       params[:book][:sale_price] = params[:book][:sale_price].to_f
-      params[:book][:average_rating] = params[:book][:average_rating] == "None" ? nil : params[:book][:average_rating].to_i
+      params[:book][:average_rating] = params[:book][:average_rating].empty? ? nil : params[:book][:average_rating].to_i
       params[:author][:full_names] = params[:author][:full_names] == "None" ? "Anonymous" : params[:author][:full_names].split(", ")
     end
 

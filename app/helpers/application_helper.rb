@@ -13,4 +13,7 @@ module ApplicationHelper
         authors.blank? ? nil : authors.join(", ")
     end
 
+    def author_names(authors)
+        authors.map { |author| author.full_name } 
+    end
 end

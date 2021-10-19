@@ -20,7 +20,7 @@
                             <%= f.hidden_field :title, value: book_text(@api_book["volumeInfo"]["title"]) %>
                             <%= f.hidden_field :description, value: book_text(@api_book["volumeInfo"]["description"]) %>
                             <%= f.hidden_field :image_link, value: book_image_url(@api_book["volumeInfo"]["imageLinks"]) %>
-                            <%= f.hidden_field :average_rating, value: book_text(@api_book["volumeInfo"]["average_rating"]) %>
+                            <%= f.hidden_field :average_rating, value: @api_book["volumeInfo"]["averageRating"] %>
                             <%= f.hidden_field :publisher, value: book_text(@api_book["volumeInfo"]["publisher"]) %>
                             <%= f.hidden_field :published_date, value: book_text(@api_book["volumeInfo"]["publishedDate"]) %>
                             <%= f.hidden_field :preview_link, value: book_text(@api_book["volumeInfo"]["previewLink"]) %>
