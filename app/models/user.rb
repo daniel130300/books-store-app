@@ -12,10 +12,10 @@ class User < ApplicationRecord
   validates_presence_of :birth_date 
 
   def self.search(id, search)
+    raise Exceptions::ApiExceptions::FriendError::MissingSearchTerms if search.blank?
     search.strip!
-    user = self.where.not(id: id).and(self.where("email like ?", "%#{search}%").or(self.where("first_name like ?", "%#{search}%")).or(self.where("last_name like ?", "%#{search}%")))
+    user = self.where.not(id: id).and(self.where("email like ?", "%#{search}%").or(self.where("fullname like ?", "%#{search}%")))
     return nil unless user
-    user
   end
 
   def not_friends_with?(id_of_friend)

@@ -1,14 +1,10 @@
-<div class="results-block">
-    <%= render 'layouts/messages'%>
-</div>
-
 <% if @friends && !@friends.empty? %>
     <div class="card card-header results-block mb-3">
         <table class="col-md-12">
             <tbody class="table table-borderless">
                 <% @friends.each do |friend| %>
                     <tr class="my-3">
-                        <td><strong>Name: </strong> <%= friend.full_name %></td>
+                        <td><strong>Name: </strong> <%= friend.fullname %></td>
                         <td><strong>Email: </strong> <%= friend.email %></td>
                         <td><strong>Actions: </strong> <%= link_to 'View Profile', user_path(friend), class: 'btn btn-sm btn-success' %></td>
                     <% if current_user.not_friends_with?(friend.id) %>

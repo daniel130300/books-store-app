@@ -48,11 +48,11 @@ class BooksController < ApplicationController
 
   def serve_search 
     @api_books = Apis::GoogleApi::SearchBooks.volumes(params[:book])
-
-    @api_books.each do |book|
-      book["already_added"] = !Book.check_book(book["id"])
+    if !@api_books.blank?
+      @api_books.each do |book|
+        book["already_added"] = !Book.check_book(book["id"])
+      end
     end
-
     respond_to do |format|
       format.js { render partial: 'books/search_result' }
     end    
@@ -64,7 +64,6 @@ class BooksController < ApplicationController
   end
 
   def add_book
-    params
     sanitize_params
     @book_model = Book.new(book_params)
     if !params[:author][:full_names].blank?
@@ -103,7 +102,7 @@ class BooksController < ApplicationController
     def render_error_response(error)
       @error = error 
       respond_to do |format|
-        format.js { render partial: 'books/api_error' }
+        format.js { render partial: 'shared/ajax_error' }
       end
     end
 end

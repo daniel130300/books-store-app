@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+
+    rescue_from Exceptions::BaseException, :with => :render_error_response
+    
     def friends
       @friends = current_user.friends
     end
@@ -8,24 +11,22 @@ class UsersController < ApplicationController
     end
   
     def search
-      if params[:friend].present?
         @friends = User.search(current_user.id, params[:friend]) 
-        if @friends.any? 
-            respond_to do |format|
-                format.js { render partial: 'users/friend_result' }
-            end
-        else
-            flash.now[:alert] = "Couldn't found any user"
-            respond_to do |format|
-                format.js { render partial: 'users/friend_result' }
-            end
-        end
-      else
-        flash.now[:alert] = "Enter the name or email of the user you want to find"
+
+        p @friends
+
         respond_to do |format|
             format.js { render partial: 'users/friend_result' }
         end
-      end
-    end  
+    end
+
+    private
+    
+    def render_error_response(error)
+        @error = error 
+        respond_to do |format|
+          format.js { render partial: 'shared/ajax_error' }
+        end
+    end
 end
   
