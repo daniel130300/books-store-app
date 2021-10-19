@@ -32,6 +32,7 @@ gem 'httparty'
 gem 'font-awesome-rails'
 gem 'active_model_serializers', '~> 0.10.12'
 gem 'will_paginate', '~> 3.1.0'
+gem 'pg_search'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false

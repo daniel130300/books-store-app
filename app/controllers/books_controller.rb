@@ -49,9 +49,7 @@ class BooksController < ApplicationController
   def serve_search 
     @api_books = Apis::GoogleApi::SearchBooks.volumes(params[:book])
     if !@api_books.blank?
-      @api_books.each do |book|
-        book["already_added"] = !Book.check_book(book["id"])
-      end
+      @api_books.each {|book| book["already_added"] = !Book.check_book(book["id"])}
     end
     respond_to do |format|
       format.js { render partial: 'books/search_result' }

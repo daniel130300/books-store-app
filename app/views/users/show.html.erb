@@ -2,22 +2,14 @@
   <%= fa_icon 'arrow-circle-left' %> Back
 <% end %>
 
-<div class="card card-header results-block mb-3">
-    <table class="col-md-12">
-        <tbody class="table table-borderless">
-            <tr class="my-3">
-                <td><strong>Name: </strong> <%= @user.fullname %></td>
-                <td><strong>Email: </strong> <%= @user.email %></td>
-                <td>
-                    <% if current_user.not_friends_with?(@user.id) %>
-                        <%= link_to 'Follow friend?', friendships_path(friend: @user), class: 'btn btn-sm btn-success', method: :post %>
-                    <% else %>
-                        <span class="badge badge-secondary">
-                            You are friends
-                        </span>
-                    <% end %>
-                </td>
-            </tr>
-        </tbody>
-    </table>        
+<div class="d-flex flex-column justify-content-center align-items-center">
+    <img src="#" alt="user image", class="img-fluid">
+    <p class="text-center"><%= @user.email %></p>
+    <p class="text-center"><%= @user.fullname %></p>
+    <% if @user.already_friends %>
+        <%= link_to 'Add friend', friendships_path(friend: @user), class: 'btn btn-sm btn-primary', method: :post %>
+    <% else %>
+        <span class="badge badge-secondary">You are friends</span>
+    <% end %>
 </div>
+
