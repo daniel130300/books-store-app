@@ -1,14 +1,12 @@
-<div class="row ml-1 mb-4">
-    <%= link_to 'Back to friends list', friends_path, class: "btn btn-sm btn-success mt-2"%>
-</div>
-
-<h2>User Details</h2>
+<%= link_to friends_path, class:"btn btn-link btn-lg px-0 " do %>
+  <%= fa_icon 'arrow-circle-left' %> Back
+<% end %>
 
 <div class="card card-header results-block mb-3">
     <table class="col-md-12">
         <tbody class="table table-borderless">
             <tr class="my-3">
-                <td><strong>Name: </strong> <%= @user.full_name %></td>
+                <td><strong>Name: </strong> <%= @user.fullname %></td>
                 <td><strong>Email: </strong> <%= @user.email %></td>
                 <td>
                     <% if current_user.not_friends_with?(@user.id) %>
