@@ -6,13 +6,13 @@ class FriendshipsController < ApplicationController
       else
         flash[:alert] = "There was something wrong adding this user as your friend"
       end
-      redirect_to search_friends_path
+      redirect_to search_friend_path
     end
   
     def destroy
       friendship = current_user.friendships.where(friend_id: params[:id]).first
       friendship.destroy
       flash[:notice] = "Stopped following"
-      redirect_to search_friends_path
+      redirect_to search_friend_path
     end
 end
