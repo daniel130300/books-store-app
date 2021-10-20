@@ -27,10 +27,8 @@ gem 'jbuilder', '~> 2.7'
 
 gem 'devise'
 gem 'devise-bootstrap-views', '~> 1.0'
-gem 'hirb'
 gem 'httparty'
 gem 'font-awesome-rails'
-gem 'active_model_serializers', '~> 0.10.12'
 gem 'will_paginate', '~> 3.1.0'
 gem 'pg_search'
 
@@ -51,6 +49,7 @@ group :development do
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  gem 'hirb'
 end
 
 group :test do
