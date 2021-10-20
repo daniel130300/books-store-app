@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     end
   
     def search
-      @friends = User.search(current_user.id, params[:friend]) 
+      @friends = User.search_friend(params[:friend]).where.not(id: current_user.id)
       if !@friends.blank?
         @friends.each { |friend| friend.already_friends = current_user.not_friends_with?(friend.id)}
       end

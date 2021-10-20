@@ -1,6 +1,6 @@
 <h3 class="mb-4">All Books</h3>
 
-<%= form_with url: '#', method: :get, local: false do |f| %>
+<%= form_with url: serve_catalog_search_path, method: :get, local: false do |f| %>
   <div class="input-group mb-3">
     <%= f.text_field :book, placeholder: "Search terms", autofocus:true, id:"search-input", class: 'form-control' %>
     <div class="input-group-append">
@@ -10,8 +10,8 @@
     </div>
   </div>
 <% end %>
-
-<div id="results">
+<div id="errors"></div>
+<div id="books-results">
   <% @books.each do |book| %>
     <div class="card mb-3">
       <div class="row no-gutters">
@@ -39,4 +39,3 @@
     </div>
   <% end %>
 </div>
-

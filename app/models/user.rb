@@ -1,6 +1,7 @@
 class User < ApplicationRecord
 
   attr_accessor :already_friends
+  include PgSearch::Model
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -11,15 +12,12 @@ class User < ApplicationRecord
   has_many :friendships
   has_many :friends, through: :friendships
 
+  pg_search_scope :search_friend,
+                  against: :fullname,
+                  using: :dmetaphone
+
   validates_presence_of :fullname
   validates_presence_of :birth_date 
-
-  def self.search(id, search)
-    raise Exceptions::ApiExceptions::FriendError::MissingSearchTerms if search.blank?
-    search.strip!
-    user = self.where.not(id: id).and(self.where("email like ?", "%#{search}%").or(self.where("fullname like ?", "%#{search}%")))
-    return user
-  end
 
   def not_friends_with?(id_of_friend)
     !self.friends.where(id: id_of_friend).exists?

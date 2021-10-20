@@ -1,7 +1,18 @@
 class Book < ApplicationRecord
+    include PgSearch::Model
 
     has_many :book_authors
     has_many :authors, through: :book_authors
+
+    
+    pg_search_scope :search_book, 
+    against: [:title, :publisher, :description],
+    associated_against: {
+        authors: :full_name
+    },
+    using: {
+        tsearch: {dictionary: "english", prefix: true }
+    }
 
     validates :purchase_price, presence: true, length: {minimum:1, maximum:7}, numericality: true
     validates :sale_price, presence: true, length: {minimum:1, maximum:7}, numericality: true

@@ -6,6 +6,15 @@ class BooksController < ApplicationController
     @books = Book.paginate(page: params[:page], per_page: 5)
   end
 
+  def serve_catalog_search
+    raise Exceptions::ApiExceptions::BookError::MissingSearchTerms if params[:book].blank?
+    @books = Book.search_book(params[:book]).paginate(page: params[:page], per_page: 5)
+    respond_to do |format|
+      format.html { render partial: 'books/catalog_search_result.html' }
+      format.js { render partial: 'books/catalog_search_result.js' }
+    end    
+  end
+
   def show
   end
 
