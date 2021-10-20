@@ -2,16 +2,11 @@ class UsersController < ApplicationController
 
     rescue_from Exceptions::BaseException, :with => :render_error_response
     
-    def friends
-      @friends = current_user.friends
+    def search_friend
     end
   
-    def show
-      @user = User.find(params[:id])
-      @user.already_friends = current_user.not_friends_with?(@user.id)
-    end
-  
-    def search
+    def serve_search_friend
+      raise Exceptions::ApiExceptions::FriendError::MissingSearchTerms if params[:friend].blank?
       @friends = User.search_friend(params[:friend]).where.not(id: current_user.id)
       if !@friends.blank?
         @friends.each { |friend| friend.already_friends = current_user.not_friends_with?(friend.id)}
@@ -19,6 +14,15 @@ class UsersController < ApplicationController
       respond_to do |format|
         format.js { render partial: 'users/friend_result' }
       end
+    end
+
+    def my_friends
+      @friends = current_user.friends
+    end
+
+    def show
+      @user = User.find(params[:id])
+      @user.already_friends = current_user.not_friends_with?(@user.id)
     end
 
     private

@@ -6,7 +6,11 @@ module ApplicationHelper
     end
 
     def book_text(text)
-        text.present? ? truncate(text, :length => 300) : "None"
+        text.present? ? text.html_safe : "None"
+    end
+
+    def limit_text(text)
+        truncate(text, :length => 300)
     end
 
     def format_authors(authors)

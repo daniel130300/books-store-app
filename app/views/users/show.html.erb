@@ -1,4 +1,4 @@
-<%= link_to friends_path, class:"btn btn-link btn-lg px-0 " do %>
+<%= link_to my_friends_path, class:"btn btn-link px-0 " do %>
   <%= fa_icon 'arrow-circle-left' %> Back
 <% end %>
 
@@ -9,7 +9,7 @@
     <% if @user.already_friends %>
         <%= link_to 'Add friend', friendships_path(friend: @user), class: 'btn btn-sm btn-primary', method: :post %>
     <% else %>
-        <span class="badge badge-secondary">You are friends</span>
+        <span class="badge badge-secondary py-2 mt-1">You are friends</span>
     <% end %>
 </div>
 

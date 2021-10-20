@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-        <%= link_to 'Books Store App', root_path, class:'navbar-brand'%>
+        <%= link_to 'Magic Books', root_path, class:'navbar-brand'%>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -16,9 +16,17 @@
                             <%= link_to 'All Books', books_path, class:"dropdown-item" %>
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <%= link_to 'Friends', friends_path, class: 'nav-link' %>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Friends
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <%= link_to 'Search friends', search_friend_path, class:"dropdown-item" %>
+                            <%= link_to 'My Friends', my_friends_path, class:"dropdown-item" %>
+                        </div>
                     </li>
+
                     <li class="nav-item">
                         <%= link_to 'Gifts', '#', class: 'nav-link' %>
                     </li>
