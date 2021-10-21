@@ -1,5 +1,5 @@
-<% if !obj.wish_books.blank? %>
-    <% obj.wish_books.each do |book| %>
+<% if !@wishlist_books.blank? %>
+    <% @wishlist_books.each do |book| %>
         <div class="card mb-3">
             <div class="row no-gutters">
                 <div class="d-flex flex-column align-items-center justify-content-center col-md-3">
@@ -25,6 +25,11 @@
             </div>  
         </div>
     <% end %>
+    <% if will_paginate @wishlist_books %>
+    <div class="flickr_pagination mb-4">
+        <%= will_paginate @wishlist_books, :container => false %>
+    </div>
+  <% end %>
 <% else %>
     <%= render 'shared/nothing_found' %>
 <% end %>

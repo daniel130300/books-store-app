@@ -7,10 +7,9 @@ class UsersController < ApplicationController
   
     def serve_search_friend
       raise Exceptions::ApiExceptions::FriendError::MissingSearchTerms if params[:friend].blank?
-      @friends = User.search_friend(params[:friend]).where.not(id: current_user.id)
-      p @friends
+      @friends = User.search_friend(params[:friend]).where.not(id: current_user.id, admin: true)
       if !@friends.blank?
-        @friends.each { |friend| friend.already_friends = current_user.not_friends_with?(friend.id)}
+        @friends.each { |friend| friend.already_friends = current_user.not_friends_with?(friend.id) }
       end
       respond_to do |format|
         format.js { render partial: 'users/partials/friend_result' }
@@ -27,12 +26,14 @@ class UsersController < ApplicationController
       if !@user.wish_books.blank?
         @user.wish_books.each { |book| book.wish_book_owner = Wishlist.is_book_owner?(book, current_user) }
       end
+      @wishlist_books = @user.wish_books.paginate(page: params[:page], per_page: 5)
     end
 
     def my_wishlist
       if !current_user.wish_books.blank?
         current_user.wish_books.each { |book| book.wish_book_owner = Wishlist.is_book_owner?(book, current_user) }
       end
+      @wishlist_books = current_user.wish_books.paginate(page: params[:page], per_page: 5)
     end
 
     private
