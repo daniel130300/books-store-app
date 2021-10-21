@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
   before_action :set_book, only: [ :show, :edit, :update, :destroy ]
+  before_action :require_admin, only: [:search, :serve_search, :add_book, :book_to_add]
   rescue_from Exceptions::BaseException, :with => :render_error_response
 
   def index
@@ -18,21 +19,7 @@ class BooksController < ApplicationController
    
   end
 
-  def new
-    @book = Book.new
-  end
-
   def edit
-  end
-
-  def create
-    @book = Book.new(book_params)
-    if @book.save
-      redirect_to @book, 
-      flash[:notice] = "Book was successfully created"
-    else
-      render :new
-    end
   end
 
   # PATCH/PUT /books/1 or /books/1.json
@@ -106,6 +93,13 @@ class BooksController < ApplicationController
       params[:book][:average_rating] = params[:book][:average_rating].empty? ? nil : params[:book][:average_rating].to_i
       params[:author][:full_names] = params[:author][:full_names] == "None" ? "Anonymous" : params[:author][:full_names].split(", ")
     end
+
+    def require_admin
+      if !current_user.admin?
+        flash[:alert] = "Only admins are allowed"
+        redirect_to books_path
+      end
+    end  
 
     def render_error_response(error)
       @error = error 

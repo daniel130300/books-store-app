@@ -1,6 +1,10 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-        <%= link_to 'Magic Books', root_path, class:'navbar-brand'%>
+        <% if current_user && current_user.admin %>
+            <%= link_to 'Magic Books (Admin)', root_path, class:'navbar-brand'%>
+        <% else %>
+            <%= link_to 'Magic Books', root_path, class:'navbar-brand'%>
+        <% end %>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -12,60 +16,69 @@
                             Books
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <%= link_to search_book_path, class:"dropdown-item" do %>
-                                <%= fa_icon 'plus-circle', text:"Add book" %> 
+                            <% if current_user.admin %>
+                                <%= link_to search_book_path, class:"dropdown-item" do %>
+                                    <%= fa_icon 'plus-circle', text:"Add book" %> 
+                                <% end %>
                             <% end %>
                             <%= link_to books_path, class:"dropdown-item" do %>
                                 <%= fa_icon 'list-ul', text:'All Books' %>
                             <% end %>
                         </div>
                     </li>
+                    <% if !current_user.admin %>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Friends
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <%= link_to search_friend_path, class:"dropdown-item" do %>
+                                    <%= fa_icon 'search', text:'Search friends'%>
+                                <% end %>
+                                <%= link_to my_friends_path, class:"dropdown-item" do %>
+                                    <%= fa_icon 'users', text: 'My friends' %>
+                                <% end %>
+                            </div>
+                        </li>
 
-                    <li class="nav-item dropdown">
+                        <li class="nav-item">
+                            <%= link_to '#', class: 'nav-link' do %>
+                                <%= fa_icon 'gift', text: 'Gifts' %>
+                            <% end %>
+                        </li>
+                        <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Friends
+                            Profile
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <%= link_to search_friend_path, class:"dropdown-item" do %>
-                                <%= fa_icon 'search', text:'Search friends'%>
+                            <%= link_to my_wishlist_path, class:"dropdown-item" do %>
+                                <%= fa_icon 'heart', text:"My wishlist" %> 
                             <% end %>
-                            <%= link_to my_friends_path, class:"dropdown-item" do %>
-                                <%= fa_icon 'users', text: 'My friends' %>
+                            <%= link_to edit_user_registration_path, class:"dropdown-item" do %>
+                                <%= fa_icon 'edit', text: "Edit Profile" %>
+                            <% end %>
+                            <%= link_to '#', class:"dropdown-item" do %>
+                                <%= fa_icon 'edit', text:"Edit Shipping Address" %> 
+                            <% end %>
+                            <%= link_to destroy_user_session_path, class: 'dropdown-item', method: :delete do %>
+                                <%= fa_icon 'sign-out', text:"LogOut" %> 
                             <% end %>
                         </div>
-                    </li>
-
-                    <li class="nav-item">
-                        <%= link_to '#', class: 'nav-link' do %>
-                            <%= fa_icon 'gift', text: 'Gifts' %>
-                        <% end %>
-                    </li>
-                    <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Profile
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <%= link_to my_wishlist_path, class:"dropdown-item" do %>
-                            <%= fa_icon 'heart', text:"My wishlist" %> 
-                        <% end %>
-                        <%= link_to edit_user_registration_path, class:"dropdown-item" do %>
-                            <%= fa_icon 'edit', text: "Edit Profile" %>
-                        <% end %>
-                        <%= link_to '#', class:"dropdown-item" do %>
-                            <%= fa_icon 'edit', text:"Edit Shipping Address" %> 
-                        <% end %>
-                        <%= link_to destroy_user_session_path, class: 'dropdown-item', method: :delete do %>
-                            <%= fa_icon 'sign-out', text:"LogOut" %> 
-                        <% end %>
-                    </div>
-                    </li>
+                        </li>
+                    <% end %>
                 </ul>
                 <ul class="navbar-nav ml-auto">
+                <% if !current_user.admin %>
                     <li class="nav-item mt-2 mr-0">
                         <%= link_to '#', class:"nav-link" do %>
                             <%= fa_icon 'shopping-cart', text: "Cart" %>
                         <% end %>
                     </li>
+                <% else %>
+                    <%= link_to destroy_user_session_path, class: 'btn btn-danger', method: :delete do %>
+                        <%= fa_icon 'sign-out', text:"LogOut" %> 
+                    <% end %>
+                <% end %>
                 </ul>
             <% else %>
                 <ul class="navbar-nav ml-auto">

@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-
+  
     rescue_from Exceptions::BaseException, :with => :render_error_response
     
     def search_friend
