@@ -3,6 +3,7 @@ class FriendshipsController < ApplicationController
       current_user.friendships.build(friend_id: params[:friend])
       if current_user.save
         flash[:notice] = "Following friend"
+        FriendMailer.add_friend_back(User.where(id:params[:friend]).first, current_user).deliver_now
       else
         flash[:alert] = "There was something wrong adding this user as your friend"
       end
