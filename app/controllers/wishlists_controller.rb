@@ -21,5 +21,4 @@ class WishlistsController < ApplicationController
 
         redirect_to my_friends_path
     end
-
 end

@@ -13,7 +13,7 @@ class UsersController < ApplicationController
         @friends.each { |friend| friend.already_friends = current_user.not_friends_with?(friend.id)}
       end
       respond_to do |format|
-        format.js { render partial: 'users/friend_result' }
+        format.js { render partial: 'users/partials/friend_result' }
       end
     end
 
@@ -24,9 +24,15 @@ class UsersController < ApplicationController
     def show
       @user = User.find(params[:id])
       @user.already_friends = current_user.not_friends_with?(@user.id)
+      if !@user.wish_books.blank?
+        @user.wish_books.each { |book| book.wish_book_owner = Wishlist.is_book_owner?(book, current_user) }
+      end
     end
 
     def my_wishlist
+      if !current_user.wish_books.blank?
+        current_user.wish_books.each { |book| book.wish_book_owner = Wishlist.is_book_owner?(book, current_user) }
+      end
     end
 
     private

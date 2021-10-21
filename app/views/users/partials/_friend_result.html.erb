@@ -10,8 +10,8 @@
   <tbody>
     <% @friends.each do |friend| %>
         <tr class="my-3">
-            <td><%= friend.fullname %></td>
-            <td><%= friend.email %></td>
+            <td><%= friend[:fullname] %></td>
+            <td><%= friend[:email] %></td>
             <td><%= link_to 'View Profile', user_path(friend), class: 'btn btn-sm btn-success' %></td>
             <% if friend.already_friends %>
                 <td><%= link_to 'Add friend', friendships_path(friend: friend), class: 'btn btn-sm btn-primary', method: :post %></td>

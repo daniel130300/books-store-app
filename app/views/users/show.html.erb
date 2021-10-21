@@ -4,8 +4,8 @@
 
 <div class="d-flex flex-column justify-content-center align-items-center">
     <img src="#" alt="user image", class="img-fluid">
-    <p class="text-center"><%= @user.email %></p>
-    <p class="text-center"><%= @user.fullname %></p>
+    <p class="text-center"><%= @user[:email] %></p>
+    <p class="text-center"><%= @user[:fullname] %></p>
     <% if @user.already_friends %>
         <%= link_to 'Add friend', friendships_path(friend: @user), class: 'btn btn-sm btn-primary', method: :post %>
     <% else %>
@@ -23,13 +23,13 @@
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade flex-fill show active" id="owned" role="tabpanel" aria-labelledby="owned-tab">
+        <div class="tab-pane fade show active" id="owned" role="tabpanel" aria-labelledby="owned-tab">
             <p>My Books go here if i had one!</p>
         </div>
 
-        <div class="tab-pane fade flex-fill" id="wishlist" role="tabpanel" aria-labelledby="wishlist-tab">
+        <div class="tab-pane fade" id="wishlist" role="tabpanel" aria-labelledby="wishlist-tab">
             <div class="my-4">
-                <%= render 'users/wishlist', obj:@user %>
+                <%= render 'users/partials/wishlist', obj:@user %>
             </div>
         </div> 
     </div>

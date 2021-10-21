@@ -1,10 +1,12 @@
 class Book < ApplicationRecord
     include PgSearch::Model
 
+    attr_accessor :wish_book_owner
+
     has_many :book_authors
     has_many :authors, through: :book_authors
     has_many :wishlists
-    has_many :users, through: :wishlists
+    has_many :wish_users, through: :wishlists, source: 'user'
     
     pg_search_scope :search_book, 
     against: [:title, :publisher, :description],
@@ -23,4 +25,5 @@ class Book < ApplicationRecord
     def self.check_book(external_id)
         where(external_id: external_id).first
     end
+
 end

@@ -11,8 +11,13 @@
                             <h5 class="card-title"><span class="font-weight-bold">Title: </span> <%= book[:title] %> </h5>
                             <%= render 'books/partials/rating', obj:book[:average_rating]%>
                             <%= render 'books/partials/authors', obj: author_names(book.authors) %>
+                            <p class="card-text"><span class="font-weight-bold mr-2">Price: </span> <%= number_to_currency(book[:sale_price]) %></p>
                             <div class="d-flex justify-content-center">
-                                <%= link_to 'Buy Book to Friend', '#', class: "btn btn-success"%>
+                                <% if !book.wish_book_owner %>
+                                    <%= link_to 'Buy Book to Friend', '#', class: "btn btn-success"%>
+                                <% else %>
+                                    <%= link_to 'View', book_path(book), class: "btn btn-success"%>
+                                <% end %>    
                             </div>
                         </div>
                     </div>
