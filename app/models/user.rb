@@ -15,7 +15,7 @@ class User < ApplicationRecord
   has_many :wish_books, through: :wishlists, source: 'book'
 
   pg_search_scope :search_friend,
-                  against: :fullname,
+                  against: [:fullname, :email],
                   using: :dmetaphone
 
   validates_presence_of :fullname

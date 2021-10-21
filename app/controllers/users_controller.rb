@@ -26,6 +26,9 @@ class UsersController < ApplicationController
       @user.already_friends = current_user.not_friends_with?(@user.id)
     end
 
+    def my_wishlist
+    end
+
     private
 
     def render_error_response(error)

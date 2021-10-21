@@ -17,5 +17,5 @@ Rails.application.routes.draw do
   post 'add_book/:id', to: 'books#add_book', as: "add_book"
   #wishlist
   resources :wishlists, only: [:create, :destroy]
-  get 'my_wishlist', to: 'user#my_wishlist', as: "my_wishlists"
+  get 'my_wishlist', to: 'users#my_wishlist', as: "my_wishlist"
 end
