@@ -22,10 +22,16 @@
           </div>
           <% if !current_user.admin %>
             <div class="d-flex justify-content-center mt-4">
-              <%= link_to 'Preview', @book[:preview_link], class: "btn btn-primary mx-2", target: :_blank %>
-              <%= link_to 'Add to Cart', '#', class: "btn btn-success mx-2" %>
+              <%= link_to @book[:preview_link], class: "btn btn-primary mx-2", target: :_blank do %>
+                <%= fa_icon 'eye', text:"Preview" %>
+              <% end %>
+              <%= link_to '#', class: "btn btn-success mx-2" do %>
+                <%= fa_icon 'cart-plus', text:"Add to Cart" %>
+              <% end %>
               <% if !@book.already_in_wishlist %>
-                <%= link_to 'Add to Wishlist', wishlists_path(book: @book) , class: "btn btn-danger mx-2", method: :post %>
+                <%= link_to wishlists_path(book: @book) , class: "btn btn-danger mx-2", method: :post do %>
+                  <%= fa_icon 'heart', text:"Add to Wishlist" %>
+                <% end %>
               <% else %>
                 <span class="badge badge-secondary py-2 mt-1">
                   Book already added in wishlist
