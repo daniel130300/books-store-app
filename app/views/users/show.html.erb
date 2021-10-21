@@ -1,3 +1,5 @@
+<%= javascript_pack_tag 'my_js' %>
+
 <%= link_to my_friends_path, class:"btn btn-link px-0 " do %>
   <%= fa_icon 'arrow-circle-left' %> Back
 <% end %>
@@ -16,10 +18,10 @@
 <div class="d-flex flex-column justify-content-center align-items-center mt-4">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <a class="nav-link" id="owned-tab" data-toggle="tab" href="#" role="tab" aria-controls="owned" aria-selected="false">Owned Books</a>
+            <a class="nav-link" id="owned-tab" data-toggle="tab" href="#owned-tab" role="tab" aria-controls="owned" aria-selected="true">Owned Books</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link active" id="wishlist-tab" data-toggle="tab" href="#" role="tab" aria-controls="wishlist" aria-selected="true">Wishlist</a>
+            <a class="nav-link active" id="wishlist-tab" data-toggle="tab" href="#wishlist-tab" role="tab" aria-controls="wishlist" aria-selected="false">Wishlist</a>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
