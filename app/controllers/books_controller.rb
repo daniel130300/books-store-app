@@ -12,6 +12,10 @@ class BooksController < ApplicationController
   end
 
   def show
+    if !@book.blank?
+      @book.already_in_wishlist = current_user.already_in_wishlist?(@book)
+    end
+   
   end
 
   def new

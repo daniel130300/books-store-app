@@ -24,5 +24,9 @@ class User < ApplicationRecord
   def not_friends_with?(id_of_friend)
     !self.friends.where(id: id_of_friend).exists?
   end
-  
+
+  def already_in_wishlist?(book)
+    self.wish_books.where(id:book).exists?
+  end
+
 end
