@@ -3,7 +3,8 @@ class Book < ApplicationRecord
 
     has_many :book_authors
     has_many :authors, through: :book_authors
-
+    has_many :wishlists
+    has_many :users, through: :wishlists
     
     pg_search_scope :search_book, 
     against: [:title, :publisher, :description],

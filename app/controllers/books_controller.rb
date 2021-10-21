@@ -93,6 +93,7 @@ class BooksController < ApplicationController
       params.require(:book).permit(:id, :title, :description, :image_link, :average_rating, :publisher, :published_date, :preview_link, :quantity, :purchase_price, :sale_price, :external_id)
     end
 
+    #Agregar a el modelo del book, y hacer un callback con esto, before_save
     def sanitize_params
       params[:book][:title] = params[:book][:title].titleize
       params[:book][:quantity] = params[:book][:quantity].to_i

@@ -12,8 +12,12 @@
                             Books
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <%= link_to 'Add book', search_book_path, class:"dropdown-item" %>
-                            <%= link_to 'All Books', books_path, class:"dropdown-item" %>
+                            <%= link_to search_book_path, class:"dropdown-item" do %>
+                                <%= fa_icon 'plus-circle', text:"Add book" %> 
+                            <% end %>
+                            <%= link_to books_path, class:"dropdown-item" do %>
+                                <%= fa_icon 'list-ul', text:'All Books' %>
+                            <% end %>
                         </div>
                     </li>
 
@@ -22,31 +26,45 @@
                             Friends
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <%= link_to 'Search friends', search_friend_path, class:"dropdown-item" %>
-                            <%= link_to 'My Friends', my_friends_path, class:"dropdown-item" %>
+                            <%= link_to search_friend_path, class:"dropdown-item" do %>
+                                <%= fa_icon 'search', text:'Search friends'%>
+                            <% end %>
+                            <%= link_to my_friends_path, class:"dropdown-item" do %>
+                                <%= fa_icon 'users', text: 'My friends' %>
+                            <% end %>
                         </div>
                     </li>
 
                     <li class="nav-item">
-                        <%= link_to 'Gifts', '#', class: 'nav-link' %>
+                        <%= link_to '#', class: 'nav-link' do %>
+                            <%= fa_icon 'gift', text: 'Gifts' %>
+                        <% end %>
                     </li>
                     <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Profile
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <%= link_to '#', class:"dropdown-item" do %>
+                            <%= fa_icon 'heart', text:"My wishlist" %> 
+                        <% end %>
                         <%= link_to edit_user_registration_path, class:"dropdown-item" do %>
-                            <%= fa_icon 'edit' %> Edit Profile
+                            <%= fa_icon 'edit', text: "Edit Profile" %>
+                        <% end %>
+                        <%= link_to '#', class:"dropdown-item" do %>
+                            <%= fa_icon 'edit', text:"Edit Shipping Address" %> 
+                        <% end %>
+                        <%= link_to destroy_user_session_path, class: 'dropdown-item', method: :delete do %>
+                            <%= fa_icon 'sign-out', text:"LogOut" %> 
                         <% end %>
                     </div>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item mt-2 mr-0">
-                        <%= fa_icon 'user' %> <%= current_user.email %>
-                    </li>
-                    <li class="nav-item">
-                        <%= link_to 'LogOut', destroy_user_session_path, class: 'btn btn-danger mx-3', method: :delete %>
+                        <%= link_to '#', class:"nav-link" do %>
+                            <%= fa_icon 'shopping-cart', text: "Cart" %>
+                        <% end %>
                     </li>
                 </ul>
             <% else %>

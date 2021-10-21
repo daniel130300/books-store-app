@@ -1,0 +1,25 @@
+<% if !obj.wish_books.blank? %>
+    <% obj.wish_books.each do |book| %>
+        <div class="card mb-3">
+            <div class="row no-gutters">
+                <div class="d-flex flex-column align-items-center justify-content-center col-md-3">
+                    <img src=<%= book[:image_link] %> class="img-fluid my-4">
+                </div>
+                <div class="col-md-9 align-self-center">
+                    <div class="card-body text-justify">
+                        <div class="d-flex flex-column align-self-center">
+                            <h5 class="card-title"><span class="font-weight-bold">Title: </span> <%= book[:title] %> </h5>
+                            <%= render 'books/partials/rating', obj:book[:average_rating]%>
+                            <%= render 'books/partials/authors', obj: author_names(book.authors) %>
+                            <div class="d-flex justify-content-center">
+                                <%= link_to 'Buy Book to Friend', '#', class: "btn btn-success"%>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    <% end %>
+<% else %>
+    <%= render 'shared/nothing_found' %>
+<% end %>
