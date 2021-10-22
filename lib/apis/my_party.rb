@@ -11,9 +11,7 @@ module Apis
                     when 500...600
                         raise Exceptions::ApiExceptions::HttpartyError::NoResponse
                 end
-            rescue StandardError
-                raise Exceptions::ApiExceptions::HttpartyError::SomethingWentWrong
-            rescue HTTParty::Error 
+            rescue
                 raise Exceptions::ApiExceptions::HttpartyError::SomethingWentWrong
             end
         end
