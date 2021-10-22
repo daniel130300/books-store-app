@@ -6,7 +6,7 @@ class FriendMailer < ApplicationMailer
   #   en.friend_mailer.add_friend_back.subject
   #
   def add_friend_back(friend, user)
-    @friend = friend
-    mail to: friend.email, subject: " The user #{user.fullname} with email #{user.email} has added you as a friend!"
+    @user = user
+    mail to: friend.email, subject: "#{user.email} has added you as a friend!"
   end
 end

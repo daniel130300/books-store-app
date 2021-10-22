@@ -14,7 +14,9 @@
                             <p class="card-text"><span class="font-weight-bold mr-2">Price: </span> <%= number_to_currency(book[:sale_price]) %></p>
                             <div class="d-flex justify-content-center">
                                 <% if !book.wish_book_owner %>
-                                    <%= link_to 'Buy Book to Friend', '#', class: "btn btn-success"%>
+                                    <% if !@user.already_friends %>
+                                        <%= link_to 'Buy Book to Friend', '#', class: "btn btn-success"%>
+                                    <% end %>
                                 <% else %>
                                     <%= link_to 'View', book_path(book), class: "btn btn-success"%>
                                 <% end %>    

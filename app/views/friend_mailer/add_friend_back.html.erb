@@ -1,3 +1,7 @@
 <p>
-  An email has been sent back to the user <%= @friend.fullname %> in order for him to add you back
+  The user <%= @user.fullname %> with email <%= @user.email %> has added you as a friend!
+</p>
+<p>
+  If you want to add this user as a friend click the following link: 
+  <%= link_to "#{@user.fullname} Profile", @user, target: :_blank %>, and once you have been redirected click the add friend button.
 </p>

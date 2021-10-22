@@ -1,3 +1,6 @@
-An email has been sent back to the user <%= @friend.fullname %> in order for him to add you back
+The user <%= @user.fullname %> with email <%= @user.email %> has added you as a friend!
+
+If you want to add this user as a friend click the following link: 
+<%= user_url(@user) %>, and once you have been redirected click the add friend button.
 
 
