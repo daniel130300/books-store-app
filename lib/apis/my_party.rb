@@ -5,7 +5,7 @@ module Apis
                 response = HTTParty.get(*args)
                 if response.code == 404
                     raise Exceptions::ApiExceptions::HttpartyError::NotFound
-                elsif response.code == 500..600
+                elsif (500..600).include?(response.code)
                     raise Exceptions::ApiExceptions::HttpartyError::NoResponse
                 else
                     response
