@@ -3,12 +3,13 @@ module Apis
         def self.get(*args)
             begin
                 response = HTTParty.get(*args)
-                if response.code == 404
-                    raise Exceptions::ApiExceptions::HttpartyError::NotFound
-                elsif (500..600).include?(response.code)
-                    raise Exceptions::ApiExceptions::HttpartyError::NoResponse
-                else
-                    response
+                case response.code
+                    when 200
+                        return response
+                    when 404
+                        raise Exceptions::ApiExceptions::HttpartyError::NotFound
+                    when 500...600
+                        raise Exceptions::ApiExceptions::HttpartyError::NoResponse
                 end
             rescue StandardError
                 raise Exceptions::ApiExceptions::HttpartyError::SomethingWentWrong
