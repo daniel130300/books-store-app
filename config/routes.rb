@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get 'my_friends', to: 'users#my_friends', as: "my_friends"
   resources :friendships, only: [:create, :destroy]
   resources :users, only: [:show]
+  #address
+  resources :addresses, only: [:new, :create, :edit, :update]
   #books
   resources :books, except: [:new, :create]
   get 'search_book', to: 'books#search', as: "search_book"
