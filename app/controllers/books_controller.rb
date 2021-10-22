@@ -8,7 +8,6 @@ class BooksController < ApplicationController
   end
 
   def catalog_search
-    # raise Exceptions::ApiExceptions::BookError::MissingSearchTerms if params[:book].blank?
     @search_books = Book.search_book(params[:book]).paginate(page: params[:page], per_page: 5) 
   end
 
@@ -16,13 +15,11 @@ class BooksController < ApplicationController
     if !@book.blank?
       @book.already_in_wishlist = current_user.already_in_wishlist?(@book)
     end
-   
   end
 
   def edit
   end
 
-  # PATCH/PUT /books/1 or /books/1.json
   def update
     if @book.update(book_params)
       redirect_to @book, 
@@ -32,7 +29,6 @@ class BooksController < ApplicationController
     end
   end
 
-  # DELETE /books/1 or /books/1.json
   def destroy
     @book.destroy
       redirect_to books_url
@@ -58,8 +54,8 @@ class BooksController < ApplicationController
   end
 
   def add_book
-    sanitize_params
     @book_model = Book.new(book_params)
+    params[:author][:full_names] = params[:author][:full_names] == "None" ? "Anonymous" : params[:author][:full_names].split(", ")
     if !params[:author][:full_names].blank?
       params[:author][:full_names].each do |full_name|
         author = Author.where(full_name: full_name.titleize).first_or_create(full_name: full_name.titleize)
@@ -82,17 +78,7 @@ class BooksController < ApplicationController
 
     def book_params
       params.require(:book).permit(:id, :title, :description, :image_link, :average_rating, :publisher, :published_date, :preview_link, :quantity, :purchase_price, :sale_price, :external_id)
-    end
-
-    #Agregar a el modelo del book, y hacer un callback con esto, before_save
-    def sanitize_params
-      params[:book][:title] = params[:book][:title].titleize
-      params[:book][:quantity] = params[:book][:quantity].to_i
-      params[:book][:purchase_price] = params[:book][:purchase_price].to_f
-      params[:book][:sale_price] = params[:book][:sale_price].to_f
-      params[:book][:average_rating] = params[:book][:average_rating].empty? ? nil : params[:book][:average_rating].to_i
-      params[:author][:full_names] = params[:author][:full_names] == "None" ? "Anonymous" : params[:author][:full_names].split(", ")
-    end
+    end    
 
     def require_admin
       if !current_user.admin?
