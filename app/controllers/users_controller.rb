@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   
     def serve_search_friend
       raise Exceptions::ApiExceptions::FriendError::MissingSearchTerms if params[:friend].blank?
-      @friends = User.search_friend(params[:friend]).where.not(id: current_user).and(User.where.not(admin: true))
+      @friends = User.search(params[:friend], current_user)
       if !@friends.blank?
         @friends.each { |friend| friend.already_friends = current_user.not_friends_with?(friend.id) }
       end
