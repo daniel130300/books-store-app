@@ -13,6 +13,8 @@ class User < ApplicationRecord
   has_many :friends, through: :friendships
   has_many :wishlists
   has_many :wish_books, through: :wishlists, source: 'book'
+  has_many :shopping_carts
+  has_many :cart_books, through: :shopping_carts, source: 'book'
 
   pg_search_scope :search_friend,
                   against: [:fullname, :email],
