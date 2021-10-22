@@ -1,7 +1,7 @@
 module ApplicationHelper
 
     def book_image_url(image_links)
-        image_url = image_links.present? ? image_links["smallThumbnail"] : asset_url("none_image.jpeg")
+        image_url = image_links.present? ? image_links["smallThumbnail"] : asset_path("none_image.jpeg")
         image_url
     end
 
