@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :friendships, only: [:create, :destroy]
   resources :users, only: [:show]
   #address
-  resources :addresses, only: [:new, :create, :edit, :update]
+  resource :address
   #books
   resources :books, except: [:new, :create]
   get 'search_book', to: 'books#search', as: "search_book"
