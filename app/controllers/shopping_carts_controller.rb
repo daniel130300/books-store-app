@@ -1,5 +1,9 @@
 class ShoppingCartsController < ApplicationController
 
+    def index
+        @cart_books = current_user.cart_books
+    end
+
     def create
         current_user.shopping_carts.build(book_params)
         if current_user.save

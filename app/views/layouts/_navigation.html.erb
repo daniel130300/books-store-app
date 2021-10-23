@@ -72,7 +72,7 @@
                 <ul class="navbar-nav ml-auto">
                 <% if !current_user.admin %>
                     <li class="nav-item mt-2 mr-0">
-                        <%= link_to '#', class:"nav-link" do %>
+                        <%= link_to shopping_carts_path, class:"nav-link" do %>
                             <%= fa_icon 'shopping-cart', text: "Cart" %>
                         <% end %>
                     </li>

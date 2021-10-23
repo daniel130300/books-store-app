@@ -21,5 +21,5 @@ Rails.application.routes.draw do
   resources :wishlists, only: [:create, :destroy]
   get 'my_wishlist', to: 'users#my_wishlist', as: "my_wishlist"
   #shopping cart
-  resources :shopping_carts, only: [:create, :destroy]
+  resources :shopping_carts, only: [:create, :destroy, :index]
 end
