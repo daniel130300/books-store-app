@@ -1,7 +1,7 @@
 class Book < ApplicationRecord
     include PgSearch::Model
 
-    attr_accessor :wish_book_owner, :already_in_wishlist
+    attr_accessor :wish_book_owner, :already_in_wishlist, :already_in_cart
 
     has_many :book_authors
     has_many :authors, through: :book_authors

@@ -31,6 +31,10 @@ class User < ApplicationRecord
     self.wish_books.where(id:book).exists?
   end
 
+  def already_in_cart?(book)
+    self.cart_books.where(id:book).exists?
+  end
+
   def self.search(friend, current_user)
     self.search_friend(friend).where.not(id: current_user).and(self.where.not(admin: true))
   end
