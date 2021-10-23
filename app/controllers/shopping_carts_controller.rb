@@ -1,7 +1,8 @@
 class ShoppingCartsController < ApplicationController
 
     def index
-        @cart_books = current_user.cart_books
+        @cart_checkout = ShoppingCart.new()
+        @cart_books = current_user.shopping_carts
     end
 
     def create
