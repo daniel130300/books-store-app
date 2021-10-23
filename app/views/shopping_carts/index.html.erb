@@ -21,11 +21,12 @@
                     <tr class="my-3">
                         <td> <%= current_user.cart_books.find(book[:book_id])[:title] %></td>
                         <td>
-                            <%= form_with(model:@cart_checkout, url: '#', local: false, method: :post) do |f| %>
-                                <%= f.number_field :quantity, value: book[:quantity], in: 1..30, class: "form-control"%>
+                            <%= form_with(model:@cart_checkout, url: update_cart_prices_path, local: true, method: :put) do |f| %>
+                                <%= f.hidden_field :book_id, value: book[:book_id]%>
+                                <%= f.number_field :quantity, value: book[:quantity], in: 1..30, class: "form-control", onchange: 'this.form.submit()'%>
                             <% end %>
                         </td>
-                        <td><%= number_to_currency(book[:price]) %></td>
+                        <td><%= number_to_currency(book[:book_id]) %></td>
                         <td><%= link_to 'View', '#', class: 'btn btn-sm btn-primary' %></td>
                         <td><%= link_to 'Delete', '#', class: 'btn btn-sm btn-danger', method: :post %></td>
                     </tr>
@@ -39,10 +40,12 @@
 
     <div class="col-3 bg-light">
         <div class="d-flex flex-column mt-4">
-            <p><span class="font-weight-bold">Subtotal: </span><%= number_to_currency(@prices[:subtotal]) %></p>
-            <p><span class="font-weight-bold">Taxes: </span><%= number_to_currency(@prices[:tax]) %></p>
-            <p><span class="font-weight-bold">Total: </span><%= number_to_currency(@prices[:total]) %></p>
-            <%= button_to 'Proceed to checkout', '#', class:"btn btn-success"%>
+            <div id="cart_prices">
+                <p><span class="font-weight-bold">Subtotal: </span><%= number_to_currency(@prices[:subtotal]) %></p>
+                <p><span class="font-weight-bold">Taxes: </span><%= number_to_currency(@prices[:tax]) %></p>
+                <p><span class="font-weight-bold">Total: </span><%= number_to_currency(@prices[:total]) %></p>
+                <%= button_to 'Proceed to checkout', '#', class:"btn btn-success"%>
+            </div>
         </div>
     </div>
 </div>

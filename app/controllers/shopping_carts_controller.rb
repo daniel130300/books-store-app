@@ -6,12 +6,15 @@ class ShoppingCartsController < ApplicationController
         @prices = Services::GetCartPrices.call(@cart_books)
     end
 
-    def update_prices
-
+    def update_cart_prices
+        book = current_user.shopping_carts.where(search_cart_params)
+        if book.update(update_cart_params)
+            @prices = Services::GetCartPrices.call(current_user.shopping_carts)
+        end
     end
 
     def create
-        current_user.shopping_carts.build(book_params)
+        current_user.shopping_carts.build(cart_params)
         if current_user.save
             flash[:notice] = "Book added to shopping cart"
         else
@@ -21,7 +24,7 @@ class ShoppingCartsController < ApplicationController
     end
   
     def destroy
-        book = current_user.wishlists.where(user_id: current_user, book_id: params[:id]).first
+        book = current_user.wishlists.where(cart_params).first
         if book.destroy
             flash[:notice] = "Book removed from your shopping cart"
             redirect_to book_path(params[:id])
@@ -34,7 +37,15 @@ class ShoppingCartsController < ApplicationController
 
     private
 
-    def book_params 
+    def cart_params 
         params.require(:book).permit(:book_id, :quantity, :price)
+    end
+
+    def update_cart_params 
+        params.require(:shopping_cart).permit(:book_id, :quantity)
+    end
+
+    def search_cart_params 
+        params.require(:shopping_cart).permit(:book_id)
     end
 end
