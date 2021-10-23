@@ -20,4 +20,6 @@ Rails.application.routes.draw do
   #wishlist
   resources :wishlists, only: [:create, :destroy]
   get 'my_wishlist', to: 'users#my_wishlist', as: "my_wishlist"
+  #shopping cart
+  resources :shopping_carts, only: [:create, :destroy]
 end

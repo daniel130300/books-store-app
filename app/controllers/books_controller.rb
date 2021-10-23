@@ -77,7 +77,7 @@ class BooksController < ApplicationController
     end
 
     def book_params
-      params.require(:book).permit(:id, :title, :description, :image_link, :average_rating, :publisher, :published_date, :preview_link, :quantity, :purchase_price, :sale_price, :external_id)
+      params.require(:book).permit(:id, :title, :description, :image_link, :average_rating, :publisher, :published_date, :preview_link, :stock, :purchase_price, :sale_price, :external_id)
     end    
 
     def require_admin
