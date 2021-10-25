@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_22_234511) do
+ActiveRecord::Schema.define(version: 2021_10_25_055444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -61,6 +61,27 @@ ActiveRecord::Schema.define(version: 2021_10_22_234511) do
     t.index ["user_id"], name: "index_friendships_on_user_id"
   end
 
+  create_table "sale_books", force: :cascade do |t|
+    t.bigint "sale_id"
+    t.bigint "book_id"
+    t.integer "quantity"
+    t.decimal "price", precision: 7, scale: 2
+    t.boolean "view_flag", default: false
+    t.index ["book_id"], name: "index_sale_books_on_book_id"
+    t.index ["sale_id"], name: "index_sale_books_on_sale_id"
+  end
+
+  create_table "sales", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "friend_id"
+    t.decimal "sale_tax", precision: 3
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "address"
+    t.index ["friend_id"], name: "index_sales_on_friend_id"
+    t.index ["user_id"], name: "index_sales_on_user_id"
+  end
+
   create_table "shopping_carts", force: :cascade do |t|
     t.bigint "book_id"
     t.bigint "user_id"
@@ -105,4 +126,6 @@ ActiveRecord::Schema.define(version: 2021_10_22_234511) do
   add_foreign_key "book_authors", "books"
   add_foreign_key "friendships", "users"
   add_foreign_key "friendships", "users", column: "friend_id"
+  add_foreign_key "sales", "users"
+  add_foreign_key "sales", "users", column: "friend_id"
 end
