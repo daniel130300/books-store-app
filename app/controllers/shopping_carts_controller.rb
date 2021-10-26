@@ -15,11 +15,15 @@ class ShoppingCartsController < ApplicationController
     end
 
     def create
-        current_user.shopping_carts.build(create_cart_params)
-        if current_user.save
-            flash[:notice] = "Book added to shopping cart"
+        if Book.check_book_availabilty(params[:book][:book_id], params[:book][:quantity])
+            current_user.shopping_carts.build(create_cart_params)
+            if current_user.save
+                flash[:notice] = "Book added to shopping cart"
+            else
+                flash[:alert] = "There was something wrong adding this book to your shopping cart"
+            end
         else
-            flash[:alert] = "There was something wrong adding this book to your shopping cart"
+            flash[:alert] = "We're sorry, there are only #{Book.where(id: params[:book_id]).first.quantity} units left"
         end
         redirect_to book_path(params[:book][:book_id])
     end
