@@ -22,5 +22,6 @@ Rails.application.routes.draw do
   get 'my_wishlist', to: 'users#my_wishlist', as: "my_wishlist"
   #shopping cart
   resources :shopping_carts, only: [:create, :destroy, :index]
-  put 'update_cart_prices', to: 'shopping_carts#update_cart_prices', as: "update_cart_prices"
+  put 'update_cart', to: 'shopping_carts#update_cart', as: "update_cart"
+  post 'checkout', to: 'shopping_carts#checkout', as: "checkout"
 end

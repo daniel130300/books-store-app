@@ -1,9 +1,9 @@
 class Sale < ApplicationRecord
     belongs_to :user
-    belongs_to :friend, class_name: 'User'
+    belongs_to :friend, class_name: 'User', optional: true
     has_many :sale_books
     has_many :books, through: :sale_books
 
     validates :address, presence: true
-    validates :sale_tax, presence: true, :numericality  
+    validates :sale_tax, presence: true, numericality: {} 
 end

@@ -31,8 +31,8 @@ class Book < ApplicationRecord
         where(external_id: external_id).first
     end
 
-    def self.check_book_availabilty(book, quantity)
-        self.where(id: book).first.stock >= quantity.to_i
+    def self.check_book_availability(book, quantity)
+        self.where(id: book).first.stock > 0 && self.where(id: book).first.stock >= quantity.to_i
     end
 
     private 

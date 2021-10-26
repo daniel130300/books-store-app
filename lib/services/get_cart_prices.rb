@@ -1,7 +1,6 @@
 module Services
     class GetCartPrices < ApplicationService
         TAX_RATE = 0.12
-        attr_reader :element
 
         def initialize(element)
             @element = element
