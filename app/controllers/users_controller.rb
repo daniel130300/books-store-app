@@ -24,15 +24,18 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
       @user.already_friends = current_user.not_friends_with?(@user.id)
       @wishlist_books = @user.wish_books.paginate(page: params[:page], per_page: 5)
-      if @wishlist_books.blank?
-        @wishlist_books.each { |book| book.wish_book_owner = Wishlist.is_book_owner?(book, current_user) }
+      if !@wishlist_books.blank?
+        @wishlist_books.each do |book| 
+          book.wish_book_owner = false
+          book.price_details = Services::GetCartPrices.call(book)
+        end
       end
     end
 
     def my_wishlist
       @wishlist_books = current_user.wish_books.paginate(page: params[:page], per_page: 5)
       if !@wishlist_books.blank?
-        @wishlist_books.each { |book| book.wish_book_owner = Wishlist.is_book_owner?(book, current_user) }
+        @wishlist_books.each { |book| book.wish_book_owner = true }
       end
     end
 

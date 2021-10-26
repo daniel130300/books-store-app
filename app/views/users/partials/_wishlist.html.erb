@@ -15,10 +15,13 @@
                             <div class="d-flex justify-content-center">
                                 <% if !book.wish_book_owner %>
                                     <% if !@user.blank? && !@user.already_friends %>
-                                        <%= link_to 'Buy Book to Friend', '#', class: "btn btn-success"%>
+                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#buyBookModal" data-whatever="<%= book.to_json %>">
+                                            Buy Book to Friend
+                                        </button>
                                     <% end %>
                                 <% else %>
                                     <%= link_to 'View', book_path(book), class: "btn btn-success"%>
+                                    <%= link_to 'Delete', wishlist_path(book), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger mx-2' %>
                                 <% end %>    
                             </div>
                         </div>
@@ -27,11 +30,29 @@
             </div>  
         </div>
     <% end %>
-    <% if will_paginate @wishlist_books %>
-    <div class="flickr_pagination mb-4">
-        <%= will_paginate @wishlist_books, :container => false %>
+    <div class="modal fade" id="buyBookModal" tabindex="-1" role="dialog" aria-labelledby="buyBookModalTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="buyBookModalTitle">Buy book to friend</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success">Proceed to checkout</button>
+                </div>
+            </div>
+        </div>
     </div>
-  <% end %>
+    <% if will_paginate @wishlist_books %>
+        <div class="flickr_pagination mb-4">
+            <%= will_paginate @wishlist_books, :container => false %>
+        </div>
+    <% end %>
 <% else %>
     <%= render 'shared/nothing_found' %>
 <% end %>

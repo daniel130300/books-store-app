@@ -14,11 +14,10 @@ class WishlistsController < ApplicationController
         book = current_user.wishlists.where(book_id: params[:id]).first
         if book.destroy
             flash[:notice] = "Book removed from wishlist"
-            redirect_to current_user
         else 
             flash[:alert] = "There was something wrong adding this book to your wishlist"
         end
-
-        redirect_to my_friends_path
+        
+        redirect_to my_wishlist_path
     end
 end

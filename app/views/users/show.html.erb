@@ -14,28 +14,25 @@
 </div>
 
 <div class="d-flex flex-column justify-content-center mt-4">
-    <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-            <a class="nav-link active" id="owned-tab" data-toggle="tab" href="#owned-tab" role="tab" aria-controls="owned" aria-selected="true">Owned Books</a>
+    <ul class="nav nav-tabs mb-3">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#owned-books">Owned Books</a>
         </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link" id="wishlist-tab" data-toggle="tab" href="#wishlist-tab" role="tab" aria-controls="wishlist" aria-selected="false">Wishlist</a>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#wishlist-books">Wishlist</a>
         </li>
     </ul>
-    <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="owned" role="tabpanel" aria-labelledby="owned-tab">
+
+    <div class="tab-content">
+        <div class="tab-pane container active" id="owned-books">
             <p>My Books go here if i had one!</p>
         </div>
 
-        <div class="tab-pane fade" id="wishlist" role="tabpanel" aria-labelledby="wishlist-tab">
-            <div class="my-4">
-                <%= render 'users/partials/wishlist' %>
-            </div>
-        </div> 
+        <div class="tab-pane container fade" id="wishlist-books">
+            <%= render 'users/partials/wishlist' %>
+        </div>
     </div>
 </div>
-
-<%= javascript_pack_tag 'my_js' %>
 
 
 

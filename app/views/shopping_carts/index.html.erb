@@ -5,7 +5,7 @@
 <h3 class="mb-4">Shopping Cart</h3>
 
 <div class="row">
-    <div class="col-9">
+    <div class="col-sm-9">
         <% if !@cart_books.blank? %>
         <table class="table table-striped">
             <thead>
@@ -17,18 +17,18 @@
                 </tr>
             </thead>
             <tbody>
-                <% @cart_books.each do |book| %>
+                <% @cart_books.each do |cart_book| %>
                     <tr class="my-3">
-                        <td> <%= current_user.cart_books.find(book[:book_id])[:title] %></td>
-                        <td>
+                        <td class="d-flex align-items-center"> <img src=<%= cart_book.book.image_link %> alt=<%= cart_book.book.title %> class="rounded float-left mr-3"> <%= cart_book.book.title %> </td>
+                        <td class="text-center align-middle">
                             <%= form_with(model:@cart_checkout, url: update_cart_prices_path, local: true, method: :put) do |f| %>
-                                <%= f.hidden_field :book_id, value: book[:book_id]%>
-                                <%= f.number_field :quantity, value: book[:quantity], in: 1..30, class: "form-control", onchange: 'this.form.submit()'%>
+                                <%= f.hidden_field :book_id, value: cart_book[:book_id]%>
+                                <%= f.number_field :quantity, value: cart_book[:quantity], class: "form-control", onchange:'this.form.submit()'%>
                             <% end %>
                         </td>
-                        <td><%= number_to_currency(book[:book_id]) %></td>
-                        <td><%= link_to 'View', '#', class: 'btn btn-sm btn-primary' %></td>
-                        <td><%= link_to 'Delete', '#', class: 'btn btn-sm btn-danger', method: :post %></td>
+                        <td class="text-center align-middle"><%= number_to_currency(cart_book[:price]) %></td>
+                        <td class="text-center align-middle"><%= link_to 'View', book_path(cart_book[:book_id]), class: 'btn btn-sm btn-primary' %></td>
+                        <td class="text-center align-middle"><%= link_to 'Delete', shopping_cart_path(cart_book[:book_id]), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-sm btn-danger' %></td>
                     </tr>
                 <% end %>
             </tbody>
@@ -38,14 +38,12 @@
         <% end  %>
     </div>
 
-    <div class="col-3 bg-light">
-        <div class="d-flex flex-column mt-4">
-            <div id="cart_prices">
-                <p><span class="font-weight-bold">Subtotal: </span><%= number_to_currency(@prices[:subtotal]) %></p>
-                <p><span class="font-weight-bold">Taxes: </span><%= number_to_currency(@prices[:tax]) %></p>
-                <p><span class="font-weight-bold">Total: </span><%= number_to_currency(@prices[:total]) %></p>
-                <%= button_to 'Proceed to checkout', '#', class:"btn btn-success"%>
-            </div>
+    <div class="col-sm-3 bg-light">
+        <div class="pt-4">
+            <p><span class="font-weight-bold">Subtotal: </span><%= number_to_currency(@prices[:subtotal]) %></p>
+            <p><span class="font-weight-bold">Taxes: </span><%= number_to_currency(@prices[:tax]) %></p>
+            <p><span class="font-weight-bold">Total: </span><%= number_to_currency(@prices[:total]) %></p>
+            <%= button_to 'Proceed to checkout', '#', class:"btn btn-success"%>
         </div>
     </div>
 </div>

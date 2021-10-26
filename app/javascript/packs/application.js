@@ -12,3 +12,7 @@ Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 import "bootstrap"
+require("jquery")
+require("packs/modal_data")
+
+
