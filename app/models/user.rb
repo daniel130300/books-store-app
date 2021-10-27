@@ -38,7 +38,7 @@ class User < ApplicationRecord
   end
 
   def self.search(friend, current_user)
-    self.search_friend(friend).where.not(id: current_user).and(self.where.not(admin: true))
+    self.search_friend(friend).where.not(id: current_user).and(self.where(admin: false))
   end
 
 end

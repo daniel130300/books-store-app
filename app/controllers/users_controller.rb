@@ -46,7 +46,9 @@ class UsersController < ApplicationController
     end
 
     def my_gifts
-      @gift_books = Book.joins(sale_books: :sale).where(sales: {user_id: current_user.id}).paginate(page: params[:page], per_page: 5)
+      #@gift_books = Book.joins(sale_books: :sale).where(sales: { friend_id: current_user.id })
+      #@gift_books = Book.includes(sale_books: { sale: :user }).where('sales.friend_id = ?', current_user.id).references(:user) #OK NOW DO IT THE OTHER WAY AROUND
+      @gifted_sales = Sale.includes( :user, { sale_books: :book } ).where('sales.friend_id = ?', current_user.id).references(:user)
     end
 
     private
