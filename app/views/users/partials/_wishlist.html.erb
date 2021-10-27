@@ -15,7 +15,7 @@
                             <div class="d-flex justify-content-center">
                                 <% if !book.wish_book_owner %>
                                     <% if !@user.blank? && !@user.already_friends %>
-                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#buyBookModal" data-whatever="<%= [ book.to_json, book.price_details.to_json ] %>">
+                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#buyBookModal" data-whatever="<%= [ book.to_json, book.price_details.to_json, @user.to_json ] %>">
                                             Buy Book to Friend
                                         </button>
                                     <% end %>
@@ -43,7 +43,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success">Proceed to checkout</button>
+                    <%= form_with(id:"friend_checkout", model: @to_friend_checkout, url: book_to_friend_checkout_path, local: true) do |f| %>
+                        <%= f.submit("Proceed to checkout", class:"btn btn-success")%>
+                    <% end %>
                 </div>
             </div>
         </div>

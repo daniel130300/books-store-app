@@ -11,6 +11,16 @@ module Services
         end
 
         def call
+            if @friend.blank?
+                personal_cart_transaction
+            else
+                friend_cart_transaction
+            end
+        end
+
+        private
+
+        def personal_cart_transaction
             not_available_as_requested = []
             ActiveRecord::Base.transaction do 
                 sale = Sale.new(user_id: @current_user[:id], friend_id: @friend, sale_tax: TAX_RATE, address: user_address_to_string)
@@ -43,12 +53,6 @@ module Services
         rescue => e
             @error = e.message
             return false
-        end
-
-        private
-
-        def personal_cart_transaction
-            
         end
 
         def friend_cart_transaction

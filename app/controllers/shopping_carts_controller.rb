@@ -60,6 +60,10 @@ class ShoppingCartsController < ApplicationController
         end 
     end
 
+    def book_to_friend_checkout
+        p params
+    end
+
     private
     def create_cart_params 
         params.require(:book).permit(:book_id, :quantity, :price)

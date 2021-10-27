@@ -21,6 +21,7 @@ class UsersController < ApplicationController
     end
 
     def show
+      @to_friend_checkout = ShoppingCart.new()
       @user = User.find(params[:id])
       @user.already_friends = current_user.not_friends_with?(@user.id)
       @wishlist_books = @user.wish_books.paginate(page: params[:page], per_page: 5)

@@ -24,4 +24,5 @@ Rails.application.routes.draw do
   resources :shopping_carts, only: [:create, :destroy, :index]
   put 'update_cart', to: 'shopping_carts#update_cart', as: "update_cart"
   post 'checkout', to: 'shopping_carts#checkout', as: "checkout"
+  post 'book_to_friend_checkout', to: 'shopping_carts#book_to_friend_checkout', as: "book_to_friend_checkout"
 end
