@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resource :address
   #books
   resources :books, except: [:new, :create]
+  get 'my_books', to: 'users#my_books', as: "my_books"
   get 'search_book', to: 'books#search', as: "search_book"
   get 'serve_book_search', to: 'books#serve_search', as: "serve_book_search"
   get 'catalog_search', to: 'books#catalog_search', as: "catalog_search"
@@ -25,4 +26,6 @@ Rails.application.routes.draw do
   put 'update_cart', to: 'shopping_carts#update_cart', as: "update_cart"
   post 'checkout', to: 'shopping_carts#checkout', as: "checkout"
   post 'book_to_friend_checkout', to: 'shopping_carts#book_to_friend_checkout', as: "book_to_friend_checkout"
+  # gifts
+  get 'gifts', to:'gifts#index', as: "gifts"
 end

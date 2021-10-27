@@ -24,6 +24,7 @@ class UsersController < ApplicationController
       @to_friend_checkout = ShoppingCart.new()
       @user = User.find(params[:id])
       @user.already_friends = current_user.not_friends_with?(@user.id)
+      @owned_books = Book.joins(sale_books: :sale).where(sales: {user_id: @user.id, friend_id: nil }).distinct.paginate(page: params[:page], per_page: 5)
       @wishlist_books = @user.wish_books.paginate(page: params[:page], per_page: 5)
       if !@wishlist_books.blank?
         @wishlist_books.each do |book| 
@@ -31,6 +32,10 @@ class UsersController < ApplicationController
           book.price_details = Services::GetCartPrices.call(book)
         end
       end
+    end
+
+    def my_books
+      @owned_books = Book.joins(sale_books: :sale).where(sales: {user_id: current_user.id, friend_id: nil }).distinct.paginate(page: params[:page], per_page: 5)
     end
 
     def my_wishlist

@@ -15,6 +15,8 @@ class User < ApplicationRecord
   has_many :wish_books, through: :wishlists, source: 'book'
   has_many :shopping_carts
   has_many :cart_books, through: :shopping_carts, source: 'book'
+  has_many :sales
+  has_many :sale_books, through: :sales
 
   pg_search_scope :search_friend,
                   against: [:fullname, :email],

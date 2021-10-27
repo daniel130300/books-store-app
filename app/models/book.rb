@@ -9,6 +9,7 @@ class Book < ApplicationRecord
     has_many :wish_users, through: :wishlists, source: 'user'
     has_many :shopping_carts
     has_many :cart_users, through: :shopping_carts, source: 'user'
+    has_many :sale_books
     
     pg_search_scope :search_book, 
     against: [:title, :publisher, :description],
