@@ -49,7 +49,7 @@ class ShoppingCartsController < ApplicationController
 
     def checkout 
         cart_books = current_user.shopping_carts.includes(:book).order(:book_id)
-        transaction =  Services::ProcessCartTransaction.new(current_user, cart_books)
+        transaction = Services::ProcessCartTransaction.new(current_user, cart_books)
         if transaction.call()
             flash[:notice] = "Successful transaction!"
             redirect_to books_path
@@ -61,7 +61,16 @@ class ShoppingCartsController < ApplicationController
     end
 
     def book_to_friend_checkout
-        p params
+        book = Book.where(id:params[:to_friend_checkout][:book_id]).first
+        transaction = Services::ProcessCartTransaction.new(current_user, book, params[:to_friend_checkout][:friend_id])
+        if transaction.call()
+            flash[:notice] = "Successful transaction!"
+            redirect_to books_path
+        else
+            error = transaction.error
+            flash[:alert] = error
+            redirect_to user_path(params[:to_friend_checkout][:friend_id])
+        end
     end
 
     private

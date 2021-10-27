@@ -25,9 +25,9 @@ $(document).on('turbolinks:load' ,function() {
         }).prependTo(form);
         $('<input>', {
             type: 'hidden',
-            id: 'to_friend_checkout_book_price',
-            name: 'to_friend_checkout[book_price]',
-            value: book['sale_price']
+            id: 'to_friend_checkout_book_id',
+            name: 'to_friend_checkout[book_id]',
+            value: book['id']
         }).prependTo(form);
     });
 

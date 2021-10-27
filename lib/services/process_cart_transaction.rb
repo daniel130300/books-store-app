@@ -56,7 +56,28 @@ module Services
         end
 
         def friend_cart_transaction
-            
+            not_available_as_requested = ""
+            ActiveRecord::Base.transaction do 
+                sale = Sale.new(user_id: @current_user[:id], friend_id: @friend, sale_tax: TAX_RATE, address: user_address_to_string)
+                sale.save!
+                if Book.check_book_availability(@cart_items.id, 1)
+                    SaleBook.new(
+                        sale_id: sale.id, 
+                        book_id: @cart_items.id, 
+                        quantity: 1, 
+                        price: @cart_items.sale_price
+                    ).save!
+                    inventory_book = Book.where(id:@cart_items.id).first
+                    inventory_book.update_attribute(:stock, inventory_book.stock - 1)
+                else
+                    not_available_as_requested = "Sorry for the inconvenient, there are no units left for the book #{@cart_items.title}"
+                end
+            end
+            (raise ActiveRecord::Rollback, "#{not_available_as_requested}") if !not_available_as_requested.blank? 
+            return true
+        rescue => e
+            @error = e.message
+            return false
         end
 
         def user_address_to_string
