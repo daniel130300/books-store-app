@@ -24,6 +24,11 @@
                             <%= link_to books_path, class:"dropdown-item" do %>
                                 <%= fa_icon 'list-ul', text:'All Books' %>
                             <% end %>
+                            <% if !current_user.admin %>
+                                <%= link_to '#', class:"dropdown-item" do %>
+                                    <%= fa_icon 'book', text:'My Books' %>
+                                <% end %>
+                            <% end %>
                         </div>
                     </li>
                     <% if !current_user.admin %>

@@ -63,10 +63,9 @@ class ShoppingCartsController < ApplicationController
 
     def book_to_friend_checkout
         book = Book.where(id:params[:to_friend_checkout][:book_id]).first
-        transaction = Services::ProcessCartTransaction.new(current_user, book, params[:to_friend_checkout][:friend_id])
+        friend = User.where(id: params[:to_friend_checkout][:friend_id]).first
+        transaction = Services::ProcessCartTransaction.new(current_user, book, friend)
         if transaction.call()
-            p transaction.cart_items
-            friend = User.where(id: params[:to_friend_checkout][:friend_id]).first
             CheckoutMailer.book_to_friend_checkout(current_user, friend, transaction.sale, transaction.cart_items, Services::GetCartPrices.call(transaction.cart_items)).deliver_now
             flash[:notice] = "Successful transaction!"
             redirect_to books_path

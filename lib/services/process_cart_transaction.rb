@@ -23,7 +23,7 @@ module Services
         def personal_cart_transaction
             not_available_as_requested = []
             ActiveRecord::Base.transaction do 
-                @sale = Sale.new(user_id: @current_user[:id], friend_id: @friend, sale_tax: TAX_RATE, address: user_address_to_string)
+                @sale = Sale.new(user_id: @current_user[:id], friend_id: @friend, sale_tax: TAX_RATE, address: user_address_to_string(@current_user))
                 @sale.save!
                 @cart_items.each do |cart_item|
                     if Book.check_book_availability(cart_item.book_id, cart_item.quantity)
@@ -58,7 +58,7 @@ module Services
         def friend_cart_transaction
             not_available_as_requested = ""
             ActiveRecord::Base.transaction do 
-                @sale = Sale.new(user_id: @current_user[:id], friend_id: @friend, sale_tax: TAX_RATE, address: user_address_to_string)
+                @sale = Sale.new(user_id: @current_user[:id], friend_id: @friend[:id], sale_tax: TAX_RATE, address: user_address_to_string(@friend))
                 @sale.save!
                 if Book.check_book_availability(@cart_items.id, 1)
                     SaleBook.new(
@@ -80,14 +80,14 @@ module Services
             return false
         end
 
-        def user_address_to_string
+        def user_address_to_string(user)
             "
-            Address line 1: #{@current_user.address.address_line_1}, 
-            Address line 2: #{@current_user.address.address_line_2.blank? ? "" : @current_user.address.address_line_2 + ", "}
-            City: #{@current_user.address.city}, 
-            State or province: #{@current_user.address.state_or_province}, 
-            Postal code: #{@current_user.address.postal_code}, 
-            Telephone: #{@current_user.address.telephone}
+            Address line 1: #{user.address.address_line_1}, 
+            Address line 2: #{user.address.address_line_2.blank? ? "" : user.address.address_line_2 + ", "}
+            City: #{user.address.city}, 
+            State or province: #{user.address.state_or_province}, 
+            Postal code: #{user.address.postal_code}, 
+            Telephone: #{user.address.telephone}
             "
         end
     end
