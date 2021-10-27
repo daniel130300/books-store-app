@@ -14,5 +14,6 @@ ActiveStorage.start()
 import "bootstrap"
 require("jquery")
 require("packs/modal_data")
+require("packs/number_fields")
 
 

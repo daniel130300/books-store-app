@@ -24,12 +24,12 @@ module Services
                             price: cart_item.book.sale_price
                         ).save!
                         inventory_book = Book.where(id:cart_item.book_id).first
-                        inventory_book.update(stock: inventory_book.stock - cart_item.quantity)
+                        inventory_book.update_attribute(:stock, inventory_book.stock - cart_item.quantity)
                     else
                         inventory_book = Book.where(id:cart_item.book_id).first
                         cart_book_to_update = current_user.shopping_carts.where(book_id: cart_item.book_id).first 
                         if inventory_book.stock > 0 
-                            cart_book_to_update.update(quantity: inventory_book.stock)
+                            cart_book_to_update.update_attribute(:quantity, inventory_book.stock)
                             not_available_as_requested.push("Sorry for the inconvenient, we have updated the book #{cart_item.book.title}" "to the current units left" )
                         else
                             not_available_as_requested.push("Sorry for the inconvenient, there are no units left for the book #{cart_item.book.title}")
@@ -38,11 +38,11 @@ module Services
                 end
             end
             messages = not_available_as_requested.join(", ")
-            raise ActiveRecord::Rollback, "#{messages}" if !messages.blank?
+            !messages.blank? ? (raise ActiveRecord::Rollback, "#{messages}") : (current_user.shopping_carts.destroy_all)
             return true
-        # rescue => e
-        #     @error = e.message
-        #     return false
+        rescue => e
+            @error = e.message
+            return false
         end
 
         private

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_25_055444) do
+ActiveRecord::Schema.define(version: 2021_10_26_222811) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 2021_10_25_055444) do
   create_table "sales", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "friend_id"
-    t.decimal "sale_tax", precision: 3
+    t.decimal "sale_tax", precision: 3, scale: 2
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "address"

@@ -15,7 +15,7 @@ class ShoppingCartsController < ApplicationController
                 flash[:alert] = "There was something wrong adding this book to your shopping cart"
             end
         else
-            flash[:alert] = "We're sorry, there are only #{Book.where(id: params[:book_id]).first.quantity} units left"
+            flash[:alert] = "We're sorry, there are only #{Book.where(id: params[:book][:book_id]).first.quantity} units left"
         end
         redirect_to book_path(params[:book][:book_id])
     end
@@ -51,7 +51,6 @@ class ShoppingCartsController < ApplicationController
         cart_books = current_user.shopping_carts.includes(:book).order(:book_id)
         transaction =  Services::ProcessCartTransaction.new(current_user, cart_books)
         if transaction.call()
-            current_user.shopping_carts.destroy_all
             flash[:notice] = "Successful transaction!"
             redirect_to books_path
         else
