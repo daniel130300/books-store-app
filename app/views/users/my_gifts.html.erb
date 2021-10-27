@@ -1,0 +1,29 @@
+<h3 class="mb-4">Gifts</h3>
+
+<% @gift_books.each do |gift_book| %>
+    <div class="card mb-3">
+      <div class="row no-gutters">
+        <div class="d-flex flex-column align-items-center justify-content-center col-md-3">
+          <img src=<%= gift_book[:image_link] %> alt=<%= gift_book[:title] %> class="img-fluid mt-4">
+        </div>
+        <div class="col-md-9 align-self-center">
+          <div class="card-body text-justify">
+          <div class="d-flex flex-column align-self-center">
+            <h5 class="card-title"><span class="font-weight-bold">Title: </span> <%= gift_book[:title] %> </h5>
+            <%= render 'books/partials/rating', obj:gift_book[:average_rating]%>
+            <%= render 'books/partials/authors', obj: author_names(gift_book.authors) %>
+            <p class="card-text"><span class="font-weight-bold mr-2">Price: </span> <%= number_to_currency(gift_book[:sale_price]) %></p>
+            <div class="d-flex justify-content-center">
+              <%= link_to 'View', book_path(gift_book), class: "btn btn-success"%>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>  
+    </div>
+<% end %>
+<% if will_paginate @gift_books %>
+    <div class="flickr_pagination mb-4">
+        <%= will_paginate @gift_books, :container => false %>
+    </div>
+<% end %>

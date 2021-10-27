@@ -45,6 +45,10 @@ class UsersController < ApplicationController
       end
     end
 
+    def my_gifts
+      @gift_books = Book.joins(sale_books: :sale).where(sales: {user_id: current_user.id}).paginate(page: params[:page], per_page: 5)
+    end
+
     private
 
     def render_error_response(error)

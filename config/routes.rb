@@ -27,5 +27,5 @@ Rails.application.routes.draw do
   post 'checkout', to: 'shopping_carts#checkout', as: "checkout"
   post 'book_to_friend_checkout', to: 'shopping_carts#book_to_friend_checkout', as: "book_to_friend_checkout"
   # gifts
-  get 'gifts', to:'gifts#index', as: "gifts"
+  get 'my_gifts', to:'users#my_gifts', as: "my_gifts"
 end
