@@ -1,0 +1,13 @@
+Your personal order has been confirmed!
+Order #<%= @order.id %>
+-------------------------------------------------------------------
+        Book                Quantity                Price
+-------------------------------------------------------------------
+<% @order_items.each do |order_book| %>
+<%= order_book.book.title %>                      <%= order_book.quantity %>                   <%= number_to_currency(order_book.price) %>
+<% end %>
+-------------------------------------------------------------------
+Subtotal: <%= number_to_currency(@prices[:subtotal]) %>
+Tax: <%= number_to_currency(@prices[:tax]) %>
+Total: <%= number_to_currency(@prices[:total]) %>
+-------------------------------------------------------------------

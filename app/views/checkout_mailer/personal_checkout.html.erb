@@ -1,0 +1,35 @@
+<p>Your personal order has been confirmed!</p>
+<p>Order #<%= @order.id %></p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Book</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+    <% @order_items.each do |order_book| %>
+        <tr>
+            <td><img src=<%= order_book.book.image_link %> alt=<%= order_book.book.title %> style="width: 8rem"> <%= order_book.book.title %> </td>
+            <td><%= order_book.quantity %></td>
+            <td><%= number_to_currency(order_book.price) %></td>
+        </tr>
+    <% end %>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td col-span=2>Subtotal</td>
+            <td><%= number_to_currency(@prices[:subtotal]) %></td>
+        </tr>
+        <tr>
+            <td col-span=2>Tax</td>
+            <td><%= number_to_currency(@prices[:tax]) %></td>
+        </tr>
+        <tr>
+            <td col-span=2>Total</td>
+            <td><%= number_to_currency(@prices[:total]) %></td>
+        </tr>
+    </tfoot>
+</table>

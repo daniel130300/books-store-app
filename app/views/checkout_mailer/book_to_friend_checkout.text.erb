@@ -1,0 +1,11 @@
+Your order for your friend <%= @friend.fullname %> been confirmed!
+Order #<%= @order.id %>
+-------------------------------------------------------------------
+        Book                Quantity                Price
+-------------------------------------------------------------------
+<%= @order_book.title %>                      1                   <%= number_to_currency(@order_book.sale_price) %>
+-------------------------------------------------------------------
+Subtotal: <%= number_to_currency(@prices[:subtotal]) %>
+Tax: <%= number_to_currency(@prices[:tax]) %>
+Total: <%= number_to_currency(@prices[:total]) %>
+-------------------------------------------------------------------

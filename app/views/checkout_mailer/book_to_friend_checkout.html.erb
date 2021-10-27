@@ -1,0 +1,33 @@
+<p>The order for your friend <%= @friend.fullname %> has been confirmed!</p>
+<p>Order #<%= @order.id %></p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Book</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><img src=<%= @order_book.image_link %> alt=<%= @order_book.title %> style="width: 8rem"> <%= @order_book.title %> </td>
+            <td>1</td>
+            <td><%= number_to_currency(@order_book.sale_price) %></td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td col-span=2>Subtotal</td>
+            <td><%= number_to_currency(@prices[:subtotal]) %></td>
+        </tr>
+        <tr>
+            <td col-span=2>Tax</td>
+            <td><%= number_to_currency(@prices[:tax]) %></td>
+        </tr>
+        <tr>
+            <td col-span=2>Total</td>
+            <td><%= number_to_currency(@prices[:total]) %></td>
+        </tr>
+    </tfoot>
+</table>
