@@ -46,9 +46,18 @@ class UsersController < ApplicationController
     end
 
     def my_gifts
-      #@gift_books = Book.joins(sale_books: :sale).where(sales: { friend_id: current_user.id })
-      #@gift_books = Book.includes(sale_books: { sale: :user }).where('sales.friend_id = ?', current_user.id).references(:user) #OK NOW DO IT THE OTHER WAY AROUND
-      @gifted_sales = Sale.includes( :user, { sale_books: :book } ).where('sales.friend_id = ?', current_user.id).references(:user)
+      @gifted_sales = Sale.includes( :user, { sale_books: :book } ).where('sales.friend_id = ? and view_flag = false', current_user.id).references(:user)
+    end
+
+    def already_seen
+      @sale_book = SaleBook.new()
+      salebook = SaleBook.where(sale_id: params[:sale_id], book_id: params[:book_id]).first
+      if salebook.update_attribute(:view_flag, true)
+        flash[:notice] = "Book notification removed"
+      else 
+        flash[:alert] = "Something went wrong trying to remove the book notification"
+      end
+      redirect_to my_gifts_path
     end
 
     private
