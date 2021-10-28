@@ -1,20 +1,29 @@
 <h3 class="mb-4">Gifts</h3>
-<% @gifted_sales.each do |gifted_sale| %>
-    <% gifted_sale.sale_books.each do |sale_book| %>
-        <div class="card mb-3">
-            <div class="alert alert-secondary text-center mt-4 mx-4">
-                The following user: <%= link_to gifted_sale.user.fullname, user_path(gifted_sale.user.id) %> has gifted you the following book:
+<% if !@gifted_sales.blank? %>
+    <% @gifted_sales.each do |gifted_sale| %>
+        <% gifted_sale.sale_books.each do |sale_book| %>
+            <div class="card mb-3">
+                <div class="alert alert-secondary text-center mt-4 mx-4">
+                    The following user: <%= link_to gifted_sale.user.fullname, user_path(gifted_sale.user.id) %> has gifted you the following book:
+                </div> 
+                <h5 class="card-title text-center"><%= sale_book.book.title %></h5>
+                <img src=<%= sale_book.book.image_link %> alt=<%= sale_book.book.title %> class="rounded mx-auto d-block mt-2 mb-4" style="width: 8rem"> 
+                <div class="d-flex justify-content-center mb-4">
+                    <%= link_to 'View', book_path(sale_book.book.id), class: "btn btn-success"%>
+                    <%= form_with(model: @book, url: already_seen_path, method: :put) do |f| %>
+                        <%= f.hidden_field :sale_id, value: gifted_sale.id %>
+                        <%= f.hidden_field :book_id, value: sale_book.book.id %>
+                        <%= f.submit 'Already seen it', class: 'btn btn-warning mx-2' %>
+                    <% end %>
+                </div>
             </div> 
-            <h5 class="card-title text-center"><%= sale_book.book.title %></h5>
-            <img src=<%= sale_book.book.image_link %> alt=<%= sale_book.book.title %> class="rounded mx-auto d-block mt-2 mb-4" style="width: 8rem"> 
-            <div class="d-flex justify-content-center mb-4">
-                <%= link_to 'View', book_path(sale_book.book.id), class: "btn btn-success"%>
-                <%= form_with(model: @book, url: already_seen_path, method: :put) do |f| %>
-                    <%= f.hidden_field :sale_id, value: gifted_sale.id %>
-                    <%= f.hidden_field :book_id, value: sale_book.book.id %>
-                    <%= f.submit 'Already seen it', class: 'btn btn-warning mx-2' %>
-                <% end %>
-            </div>
-        </div> 
+        <% end %>
     <% end %>
-<% end %>
+    <% if will_paginate @gifted_sales %>
+        <div class="flickr_pagination mb-4">
+            <%= will_paginate @gifted_sales, :container => false %>
+        </div>
+    <% end %>
+<% else %>
+    <%= render 'shared/nothing_found' %>
+<%end%>

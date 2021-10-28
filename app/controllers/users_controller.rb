@@ -47,7 +47,7 @@ class UsersController < ApplicationController
     end
 
     def my_gifts
-      @gifted_sales = Sale.includes( :user, { sale_books: :book } ).where('sales.friend_id = ? and view_flag = false', current_user.id).references(:user)
+      @gifted_sales = Sale.includes( :user, { sale_books: :book } ).where('sales.friend_id = ? and view_flag = false', current_user.id).references(:user).paginate(page: params[:page], per_page: 5)
     end
 
     def already_seen
