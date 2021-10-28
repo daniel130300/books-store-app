@@ -3,7 +3,15 @@
 <% end %>
 
 <div class="d-flex flex-column justify-content-center align-items-center">
-    <img src="#" alt="user image", class="img-fluid">
+
+    <div class="text-center mb-2">
+        <% if @user.avatar.attached? %>
+            <%= image_tag(@user.avatar, class:"rounded", style:"width: 8rem") %>
+        <% else %>
+            <%= fa_icon 'user 4x' %>
+        <% end %>
+    </div>
+
     <p class="text-center"><%= @user[:email] %></p>
     <p class="text-center"><%= @user[:fullname] %></p>
     <% if @user.already_friends %>

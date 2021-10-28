@@ -17,6 +17,7 @@ class User < ApplicationRecord
   has_many :cart_books, through: :shopping_carts, source: 'book'
   has_many :sales
   has_many :sale_books, through: :sales
+  has_one_attached :avatar
 
   pg_search_scope :search_friend,
                   against: [:fullname, :email],
@@ -24,6 +25,10 @@ class User < ApplicationRecord
 
   validates_presence_of :fullname
   validates_presence_of :birth_date 
+
+  def avatar_thumbnail
+    avatar.variant(resize: "150x150!").processed 
+  end
 
   def not_friends_with?(id_of_friend)
     !self.friends.where(id: id_of_friend).exists?
