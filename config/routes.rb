@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   #address
   resource :address
   #books
-  resources :books, except: [:new, :create]
+  resources :books, except: [:new, :create, :destroy]
   get 'my_books', to: 'users#my_books', as: 'my_books'
   get 'search_book', to: 'books#search', as: 'search_book'
   get 'serve_book_search', to: 'books#serve_search', as: 'serve_book_search'

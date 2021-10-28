@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
-  before_action :set_book, only: [ :show, :edit, :update, :destroy ]
-  before_action :require_admin, only: [:search, :serve_search, :add_book, :book_to_add]
+  before_action :set_book, only: [ :show, :edit, :update ]
+  before_action :require_admin, only: [:search, :serve_search, :add_book, :book_to_add, :edit, :update]
   rescue_from Exceptions::BaseException, :with => :render_error_response
 
   def index
@@ -24,17 +24,11 @@ class BooksController < ApplicationController
 
   def update
     if @book.update(book_params)
-      redirect_to @book, 
-      flash[:notice] = "Book was successfully updated."
+      redirect_to @book 
+      flash[:notice] = "Book was successfully updated"
     else
       render :edit
     end
-  end
-
-  def destroy
-    @book.destroy
-      redirect_to books_url
-      flash[:notice] = "Book was successfully destroyed."
   end
 
   def search

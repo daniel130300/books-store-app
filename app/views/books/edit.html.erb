@@ -1,25 +1,62 @@
-<h1>Editing Book</h1>
-<%= form_with(model: book) do |form| %>
-  <% if book.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h2>
-
-      <ul>
-        <% book.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+<%= link_to books_path, class:"btn btn-link px-0 " do %>
+  <%= fa_icon 'arrow-circle-left' %> Back
 <% end %>
-<%= link_to 'Show', @book %> |
-<%= link_to 'Back', books_path %>
+<% if !@book.blank? %>
+  <div class="card mb-3">
+    <div class="row no-gutters">
+      <div class="d-flex flex-column align-items-center justify-content-center col-md-3">
+        <img src=<%= @book[:image_link] %> alt=<%= @book[:title] %> class="img-fluid mt-4">
+      </div>
+      <div class="col-md-9">
+        <div class="card-body text-justify">
+          <h5 class="card-title"><span class="font-weight-bold">Title: </span> <%= @book[:title] %> </h5>
+          <%= render 'books/partials/rating', obj:@book[:average_rating] %>
+          <%= render 'books/partials/authors', obj: author_names(@book.authors) %>
+          <p class="card-text"><span class="font-weight-bold">Description: </span> <%= book_text(@book[:description]) %> </p>
+          <div class="d-flex justify-content-between">
+            <p class="card-text"><span class="font-weight-bold mr-2">Publisher: </span> <%= @book[:publisher] %> </p>
+            <p class="card-text"><span class="font-weight-bold">Published Date: </span> <%= @book[:published_date] %></p>
+          </div>
+          <%= form_with(model: @book, local: true) do |f| %>
+            <div class="form-group row">
+                <div class="col-sm-5">
+                  <%= f.label :purchase_price, 'Purchase price:', class: "form-label font-weight-bold" %>
+                </div>
+
+                <div class="col-sm-7">
+                  <%= f.text_field :purchase_price, class: "form-control"%>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-5">
+                  <%= f.label :sale_price, 'Sale price:', class: "form-label font-weight-bold" %>
+                </div>
+
+                <div class="col-sm-7">
+                  <%= f.text_field :sale_price, class: "form-control"%>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-5">
+                  <%= f.label :stock, 'Stock:', class: "form-label font-weight-bold" %>
+                </div>
+
+                <div class="col-sm-7">
+                  <%= f.number_field :stock, in: 1..100000, class: "form-control"%>
+                </div>
+            </div>
+            
+            <div class="text-center">
+              <%= f.submit("Update", class:"btn btn-success mt-2")%>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%= render 'shared/form_errors', obj: @book %>
+<% else %>
+  <%= render 'shared/nothing_found' %>
+<% end %>
