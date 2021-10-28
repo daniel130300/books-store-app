@@ -9,7 +9,7 @@
                 <h5 class="card-title text-center"><%= sale_book.book.title %></h5>
                 <img src=<%= sale_book.book.image_link %> alt=<%= sale_book.book.title %> class="rounded mx-auto d-block mt-2 mb-4" style="width: 8rem"> 
                 <div class="d-flex justify-content-center mb-4">
-                    <%= link_to 'View', book_path(sale_book.book.id), class: "btn btn-success"%>
+                    <%= link_to 'View', book_path(sale_book.book.id), class: "btn btn-primary"%>
                     <%= form_with(model: @book, url: already_seen_path, method: :put) do |f| %>
                         <%= f.hidden_field :sale_id, value: gifted_sale.id %>
                         <%= f.hidden_field :book_id, value: sale_book.book.id %>

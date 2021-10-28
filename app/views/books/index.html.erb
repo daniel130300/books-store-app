@@ -17,7 +17,7 @@
             <%= render 'books/partials/authors', obj: author_names(book.authors) %>
             <p class="card-text"><span class="font-weight-bold mr-2">Price: </span> <%= number_to_currency(book[:sale_price]) %></p>
             <div class="d-flex justify-content-center">
-              <%= link_to 'View', book_path(book), class: "btn btn-success"%>
+              <%= link_to 'View', book_path(book), class: "btn btn-primary"%>
             </div>
           </div>
           </div>

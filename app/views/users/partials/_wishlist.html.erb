@@ -16,7 +16,7 @@
                                 <% if !book.wish_book_owner %>
                                     <% if book.still_available %>
                                         <% if !@user.blank? && !@user.already_friends %>
-                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#buyBookModal" data-whatever="<%= [ book.to_json, book.price_details.to_json, @user.to_json ] %>">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#buyBookModal" data-whatever="<%= [ book.to_json, book.price_details.to_json, @user.to_json ] %>">
                                                 Buy Book to Friend
                                             </button>
                                         <% end %>
@@ -26,7 +26,7 @@
                                         </div>
                                     <% end %>
                                 <% else %>
-                                    <%= link_to 'View', book_path(book), class: "btn btn-success"%>
+                                    <%= link_to 'View', book_path(book), class: "btn btn-primary"%>
                                     <%= link_to 'Delete', wishlist_path(book), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger mx-2' %>
                                 <% end %>    
                             </div>
