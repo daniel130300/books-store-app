@@ -5,6 +5,7 @@ ruby '2.7.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
+gem "aws-sdk-s3", require: false
 
 gem 'pg'
 # Use Puma as the app server
