@@ -15,6 +15,7 @@ class BooksController < ApplicationController
     if !@book.blank?
       @book.already_in_wishlist = current_user.already_in_wishlist?(@book)
       @book.already_in_cart = current_user.already_in_cart?(@book)
+      @book.still_available = Book.still_available?(@book)
     end
   end
 

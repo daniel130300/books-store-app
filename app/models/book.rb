@@ -1,7 +1,7 @@
 class Book < ApplicationRecord
     include PgSearch::Model
 
-    attr_accessor :wish_book_owner, :already_in_wishlist, :already_in_cart, :price_details
+    attr_accessor :wish_book_owner, :already_in_wishlist, :already_in_cart, :price_details, :still_available
 
     has_many :book_authors
     has_many :authors, through: :book_authors
@@ -34,6 +34,10 @@ class Book < ApplicationRecord
 
     def self.check_book_availability(book, quantity)
         self.where(id: book).first.stock > 0 && self.where(id: book).first.stock >= quantity.to_i
+    end
+
+    def self.still_available?(book)
+        self.where(id: book).first.stock > 0
     end
 
     private 

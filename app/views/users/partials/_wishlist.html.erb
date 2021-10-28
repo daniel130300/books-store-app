@@ -14,10 +14,16 @@
                             <p class="card-text"><span class="font-weight-bold mr-2">Price: </span> <%= number_to_currency(book[:sale_price]) %></p>
                             <div class="d-flex justify-content-center">
                                 <% if !book.wish_book_owner %>
-                                    <% if !@user.blank? && !@user.already_friends %>
-                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#buyBookModal" data-whatever="<%= [ book.to_json, book.price_details.to_json, @user.to_json ] %>">
-                                            Buy Book to Friend
-                                        </button>
+                                    <% if book.still_available %>
+                                        <% if !@user.blank? && !@user.already_friends %>
+                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#buyBookModal" data-whatever="<%= [ book.to_json, book.price_details.to_json, @user.to_json ] %>">
+                                                Buy Book to Friend
+                                            </button>
+                                        <% end %>
+                                    <% else %>
+                                        <div class="alert alert-danger d-flex flex-column align-items-center justify-content-center mx-4 mt-4" role="alert">
+                                            We're sorry there are no units left for this book
+                                        </div>
                                     <% end %>
                                 <% else %>
                                     <%= link_to 'View', book_path(book), class: "btn btn-success"%>

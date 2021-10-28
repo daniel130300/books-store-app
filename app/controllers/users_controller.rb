@@ -30,6 +30,7 @@ class UsersController < ApplicationController
         @wishlist_books.each do |book| 
           book.wish_book_owner = false
           book.price_details = Services::GetCartPrices.call(book)
+          book.still_available = Book.still_available?(book)
         end
       end
     end
