@@ -5,34 +5,36 @@
 <h3 class="mb-4">Shopping Cart</h3>
 
 <div class="row">
-    <div class="col-sm-9">
+    <div class="col-sm-9 ">
         <% if !@cart_books.blank? %>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                <th scope="col text-center">Book</th>
-                <th scope="col text-center">Quantity</th>
-                <th scope="col text-center">Price</th>
-                <th scope="col text-center" colspan = "2">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% @cart_books.each do |cart_book| %>
-                    <tr class="my-3">
-                        <td class="d-flex align-items-center"> <img src=<%= cart_book.book.image_link %> alt=<%= cart_book.book.title %> class="rounded float-left mr-3" style="width: 8rem"> <%= cart_book.book.title %> </td>
-                        <td class="text-center align-middle">
-                            <%= form_with(model:@cart_checkout, url: update_cart_path, local: true, method: :put) do |f| %>
-                                <%= f.hidden_field :book_id, value: cart_book[:book_id]%>
-                                <%= f.number_field :quantity, value: cart_book[:quantity], in: 1..cart_book.book.stock ,class: "form-control", onchange:'this.form.checkValidity() ? this.form.submit() : ""'%>
-                            <% end %>
-                        </td>
-                        <td class="text-center align-middle"><%= number_to_currency(cart_book[:price]) %></td>
-                        <td class="text-center align-middle"><%= link_to 'View', book_path(cart_book[:book_id]), class: 'btn btn-sm btn-primary' %></td>
-                        <td class="text-center align-middle"><%= link_to 'Delete', shopping_cart_path(cart_book[:book_id]), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-sm btn-danger' %></td>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                    <th scope="col text-center">Book</th>
+                    <th scope="col text-center">Quantity</th>
+                    <th scope="col text-center">Price</th>
+                    <th scope="col text-center" colspan = "2">Actions</th>
                     </tr>
-                <% end %>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <% @cart_books.each do |cart_book| %>
+                        <tr class="my-3">
+                            <td class="d-flex align-items-center"> <img src=<%= cart_book.book.image_link %> alt=<%= cart_book.book.title %> class="rounded float-left mr-3" style="width: 8rem"> <%= cart_book.book.title %> </td>
+                            <td class="text-center align-middle">
+                                <%= form_with(model:@cart_checkout, url: update_cart_path, local: true, method: :put) do |f| %>
+                                    <%= f.hidden_field :book_id, value: cart_book[:book_id]%>
+                                    <%= f.number_field :quantity, value: cart_book[:quantity], in: 1..cart_book.book.stock ,class: "form-control", onchange:'this.form.checkValidity() ? this.form.submit() : ""'%>
+                                <% end %>
+                            </td>
+                            <td class="text-center align-middle"><%= number_to_currency(cart_book[:price]) %></td>
+                            <td class="text-center align-middle"><%= link_to 'View', book_path(cart_book[:book_id]), class: 'btn btn-sm btn-primary' %></td>
+                            <td class="text-center align-middle"><%= link_to 'Delete', shopping_cart_path(cart_book[:book_id]), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-sm btn-danger' %></td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
         <% else %>
             <% render 'shared/nothing_found' %>
         <% end  %>

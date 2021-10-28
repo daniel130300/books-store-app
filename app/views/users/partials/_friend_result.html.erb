@@ -1,31 +1,33 @@
 <% if !@friends.blank? && @friends.any? %>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col text-center">Full Name</th>
-      <th scope="col text-center">Email</th>
-      <th scope="col text-center" colspan = "2">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @friends.each do |friend| %>
-        <tr class="my-3">
-            <td><%= friend[:fullname] %></td>
-            <td><%= friend[:email] %></td>
-            <td><%= link_to 'View Profile', user_path(friend), class: 'btn btn-sm btn-success' %></td>
-            <% if friend.already_friends %>
-                <td><%= link_to 'Add friend', friendships_path(friend: friend), class: 'btn btn-sm btn-primary', method: :post %></td>
-            <% else %>
-                <td>
-                <span class="badge badge-secondary py-2 mt-1">
-                  You are friends
-                </span>
-                </td>
-            <% end %>
-        </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col text-center">Full Name</th>
+        <th scope="col text-center">Email</th>
+        <th scope="col text-center" colspan = "2">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @friends.each do |friend| %>
+          <tr class="my-3">
+              <td><%= friend[:fullname] %></td>
+              <td><%= friend[:email] %></td>
+              <td><%= link_to 'View Profile', user_path(friend), class: 'btn btn-sm btn-success' %></td>
+              <% if friend.already_friends %>
+                  <td><%= link_to 'Add friend', friendships_path(friend: friend), class: 'btn btn-sm btn-primary', method: :post %></td>
+              <% else %>
+                  <td>
+                  <span class="badge badge-secondary py-2 mt-1">
+                    You are friends
+                  </span>
+                  </td>
+              <% end %>
+          </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 <% else %>
     <%= render 'shared/nothing_found' %>
 <% end %>

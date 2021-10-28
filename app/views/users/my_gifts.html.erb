@@ -1,6 +1,6 @@
 <h3 class="mb-4">Gifts</h3>
 <% @gifted_sales.each do |gifted_sale| %>
-        <% gifted_sale.sale_books.each do |sale_book| %>
+    <% gifted_sale.sale_books.each do |sale_book| %>
         <div class="card mb-3">
             <div class="alert alert-secondary text-center mt-4 mx-4">
                 The following user: <%= link_to gifted_sale.user.fullname, user_path(gifted_sale.user.id) %> has gifted you the following book:
