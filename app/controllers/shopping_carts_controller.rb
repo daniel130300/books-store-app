@@ -52,7 +52,7 @@ class ShoppingCartsController < ApplicationController
         transaction = Services::ProcessCartTransaction.new(current_user, cart_books)
         if transaction.call()
             CheckoutMailer.personal_checkout(current_user, transaction.sale, transaction.cart_items, Services::GetCartPrices.call(transaction.cart_items)).deliver_now
-            flash[:notice] = "Successful transaction!"
+            flash[:notice] = "Successful transaction! An email has been sent to you with the checkout details"
             redirect_to books_path
         else
             error = transaction.error
@@ -67,7 +67,7 @@ class ShoppingCartsController < ApplicationController
         transaction = Services::ProcessCartTransaction.new(current_user, book, friend)
         if transaction.call()
             CheckoutMailer.book_to_friend_checkout(current_user, friend, transaction.sale, transaction.cart_items, Services::GetCartPrices.call(transaction.cart_items)).deliver_now
-            flash[:notice] = "Successful transaction!"
+            flash[:notice] = "Successful transaction! An email has been sent to you with the checkout details and your friend has been notified about your gift"
             redirect_to books_path
         else
             error = transaction.error
