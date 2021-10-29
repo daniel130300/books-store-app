@@ -24,7 +24,7 @@
                             <td class="text-center align-middle">
                                 <%= form_with(model:@cart_checkout, url: update_cart_path, local: true, method: :put) do |f| %>
                                     <%= f.hidden_field :book_id, value: cart_book[:book_id]%>
-                                    <%= f.number_field :quantity, value: cart_book[:quantity], in: 1..cart_book.book.stock ,class: "form-control", onchange:'this.form.checkValidity() ? this.form.submit() : ""'%>
+                                    <%= f.select(:quantity, (1..cart_book.book.stock), { selected: cart_book[:quantity] }, { class: 'form-control', onchange:'this.form.submit()' }) %>
                                 <% end %>
                             </td>
                             <td class="text-center align-middle"><%= number_to_currency(cart_book[:price]) %></td>

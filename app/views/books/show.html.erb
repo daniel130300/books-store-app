@@ -44,7 +44,7 @@
                         <%= f.label :quantity, 'Quantity:', class: "form-label font-weight-bold" %>
                       </div>
                       <div class="col-sm-7">
-                        <%= f.number_field :quantity, value:"1", in: 1..@book[:stock], class: "form-control"%>
+                        <%= f.select(:quantity, (1..@book[:stock]), { selected: "1" }, { class: 'form-control' }) %>
                       </div>
                     </div>      
                     <div class="text-center">
