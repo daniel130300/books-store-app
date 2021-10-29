@@ -69,7 +69,7 @@ class BooksController < ApplicationController
 
   private
     def set_book
-      @book = Book.find(params[:id])
+      @book = Book.find(params[:id]) rescue not_found
     end
 
     def book_params

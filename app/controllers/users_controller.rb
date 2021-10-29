@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  
+
+    before_action :set_friend, only: [ :show ]
     rescue_from Exceptions::BaseException, :with => :render_error_response
     
     def search_friend
@@ -22,7 +23,6 @@ class UsersController < ApplicationController
 
     def show
       @to_friend_checkout = ShoppingCart.new()
-      @user = User.find(params[:id])
       @user.already_friends = current_user.not_friends_with?(@user.id)
       @owned_books = Book.joins(sale_books: :sale).where(sales: { user_id: @user.id }).or(Book.joins(sale_books: :sale).where(sales: { friend_id: @user.id })).distinct.paginate(page: params[:page], per_page: 5)
       @wishlist_books = @user.wish_books.paginate(page: params[:page], per_page: 5)
@@ -62,6 +62,10 @@ class UsersController < ApplicationController
     end
 
     private
+
+    def set_friend
+      @user = User.find(params[:id]) rescue not_found
+    end
 
     def render_error_response(error)
       @error = error 

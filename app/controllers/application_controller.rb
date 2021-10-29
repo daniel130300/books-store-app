@@ -4,6 +4,17 @@ class ApplicationController < ActionController::Base
     #before_action :require_shipping_address, unless: :devise_controller?
     before_action :require_shipping_address, unless: :devise_controller?
 
+
+    def not_found
+        raise ActionController::RoutingError.new('Not Found')
+    rescue
+        render_404
+    end
+
+    def render_404
+        render :file => "#{Rails.root}/public/404.html",  :status => 404
+    end
+
     protected
 
     def configure_permitted_parameters
