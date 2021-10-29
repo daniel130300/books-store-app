@@ -1,5 +1,5 @@
 module Exceptions
-    module ApiExceptions 
+    module CustomExceptions 
         class BookError < Exceptions::BaseException
         end
     end

@@ -21,21 +21,7 @@ module Exceptions
     }
 
     def initialize
-      api_errors()
-      service_errors()
-    end
-
-    private
-    def api_errors
-      error_type = self.class.name.scan(/ApiExceptions::(.*)/).flatten.first
-      Exceptions::BaseException::ERROR_CODE_MAP
-        .fetch(error_type, {}).each do |attr, value|
-          instance_variable_set("@#{attr}".to_sym, value)
-      end
-    end
-
-    def service_errors
-      error_type = self.class.name.scan(/ServiceExceptions::(.*)/).flatten.first
+      error_type = self.class.name.scan(/CustomExceptions::(.*)/).flatten.first
       Exceptions::BaseException::ERROR_CODE_MAP
         .fetch(error_type, {}).each do |attr, value|
           instance_variable_set("@#{attr}".to_sym, value)

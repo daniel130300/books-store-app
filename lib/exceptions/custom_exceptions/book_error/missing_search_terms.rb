@@ -1,7 +1,7 @@
 module Exceptions
-  module ApiExceptions
+  module CustomExceptions
       class BookError < Exceptions::BaseException
-        class MissingSearchTerms < ApiExceptions::BookError
+        class MissingSearchTerms < CustomExceptions::BookError
         end
       end
   end

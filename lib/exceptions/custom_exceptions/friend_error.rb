@@ -1,5 +1,5 @@
 module Exceptions
-    module ApiExceptions 
+    module CustomExceptions 
         class FriendError < Exceptions::BaseException
         end
     end

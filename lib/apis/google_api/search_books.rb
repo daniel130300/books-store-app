@@ -4,7 +4,7 @@ module Apis
             BASE_URI = "https://www.googleapis.com/books/v1/volumes";
 
             def self.volumes(search_terms)   
-                raise Exceptions::ApiExceptions::BookError::MissingSearchTerms if search_terms.blank?
+                raise Exceptions::CustomExceptions::BookError::MissingSearchTerms if search_terms.blank?
                 response = Apis::MyParty.get("#{BASE_URI}?q=#{search_terms}&maxResults=15&key=#{ENV["API_KEY"]}") 
                 response.parsed_response["items"] if response
             end

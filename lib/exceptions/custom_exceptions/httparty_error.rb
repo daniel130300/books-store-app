@@ -1,5 +1,5 @@
 module Exceptions
-    module ApiExceptions 
+    module CustomExceptions 
         class HttpartyError < Exceptions::BaseException
         end
     end

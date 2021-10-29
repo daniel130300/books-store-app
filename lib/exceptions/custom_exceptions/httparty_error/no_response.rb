@@ -1,8 +1,9 @@
 module Exceptions
-    module ApiExceptions
+    module CustomExceptions
         class HttpartyError < Exceptions::BaseException
-          class NotFound < ApiExceptions::HttpartyError
+          class NoResponse < CustomExceptions::HttpartyError
           end
         end
     end
 end
+  

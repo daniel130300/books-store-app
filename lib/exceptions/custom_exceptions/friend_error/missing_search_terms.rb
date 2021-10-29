@@ -1,8 +1,9 @@
 module Exceptions
-    module ApiExceptions
+    module CustomExceptions
         class FriendError < Exceptions::BaseException
-          class SomethingWentWrong < ApiExceptions::FriendError
+          class MissingSearchTerms < CustomExceptions::FriendError
           end
         end
     end
 end
+  

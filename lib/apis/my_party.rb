@@ -7,12 +7,12 @@ module Apis
                     when 200
                         return response
                     when 404
-                        raise Exceptions::ApiExceptions::HttpartyError::NotFound
+                        raise Exceptions::CustomExceptions::HttpartyError::NotFound
                     when 500...600
-                        raise Exceptions::ApiExceptions::HttpartyError::NoResponse
+                        raise Exceptions::CustomExceptions::HttpartyError::NoResponse
                 end
             rescue
-                raise Exceptions::ApiExceptions::HttpartyError::SomethingWentWrong
+                raise Exceptions::CustomExceptions::HttpartyError::SomethingWentWrong
             end
         end
     end

@@ -1,7 +1,7 @@
 module Exceptions
-    module ApiExceptions
+    module CustomExceptions
         class HttpartyError < Exceptions::BaseException
-          class SomethingWentWrong < ApiExceptions::HttpartyError
+          class SomethingWentWrong < CustomExceptions::HttpartyError
           end
         end
     end
