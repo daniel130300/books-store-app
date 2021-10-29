@@ -78,7 +78,7 @@ class BooksController < ApplicationController
 
     def require_admin
       if !current_user.admin?
-        flash[:alert] = "Only admins are allowed"
+        flash[:alert] = "Can't access this page"
         redirect_to books_path
       end
     end  

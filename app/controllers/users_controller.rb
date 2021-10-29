@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-
     before_action :set_friend, only: [ :show ]
+    before_action :not_visit_current_user_page, only: [:show]
+    before_action :not_visit_admin_user_page, only: [:show]
     rescue_from Exceptions::BaseException, :with => :render_error_response
     
     def search_friend
@@ -65,6 +66,20 @@ class UsersController < ApplicationController
 
     def set_friend
       @user = User.find(params[:id]) rescue not_found
+    end
+
+    def not_visit_current_user_page
+      if current_user.id == @user.id
+        flash[:alert] = "Can't access this page"
+        redirect_to search_friend_path
+      end 
+    end
+
+    def not_visit_admin_user_page
+      if @user.admin?
+        flash[:alert] = "Can't access this page"
+        redirect_to search_friend_path
+      end 
     end
 
     def render_error_response(error)
