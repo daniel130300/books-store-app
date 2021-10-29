@@ -26,7 +26,7 @@ class Book < ApplicationRecord
     validates :stock, presence: true, length: { minimum:1, maximum:6 }, numericality: { only_integer: true, greater_than: 0, less_than: 100000 }
     validates :external_id, presence: true, uniqueness: { case_sensitive: false, message: "book has been already added" }
 
-    before_validation :sanitize_params
+    before_save :sanitize_params
 
     def self.check_book(external_id)
         where(external_id: external_id).first

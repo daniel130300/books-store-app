@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_28_034340) do
+ActiveRecord::Schema.define(version: 2021_10_29_152712) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -75,8 +75,8 @@ ActiveRecord::Schema.define(version: 2021_10_28_034340) do
     t.string "published_date"
     t.string "preview_link"
     t.integer "stock"
-    t.decimal "purchase_price"
-    t.decimal "sale_price"
+    t.decimal "purchase_price", precision: 7, scale: 2
+    t.decimal "sale_price", precision: 7, scale: 2
     t.string "external_id"
   end
 

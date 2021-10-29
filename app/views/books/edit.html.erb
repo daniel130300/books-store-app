@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="col-sm-7">
-                  <%= f.text_field :purchase_price, class: "form-control"%>
+                  <%= f.text_field :purchase_price, class: 'form-control', value: (number_with_precision(f.object.purchase_price, :precision => 2) || 0) %>
                 </div>
             </div>
 
@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="col-sm-7">
-                  <%= f.text_field :sale_price, class: "form-control"%>
+                  <%= f.text_field :sale_price, class: 'form-control', value: (number_with_precision(f.object.sale_price, :precision => 2) || 0) %>
                 </div>
             </div>
 
