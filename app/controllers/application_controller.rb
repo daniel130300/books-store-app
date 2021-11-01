@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
 
     def require_shipping_address
         if user_signed_in? && !current_user.admin && current_user.address.blank?
-            flash[:alert] = "Before tou continue, please add your shipping address"
+            flash[:alert] = "Before you continue, please add your shipping address"
             redirect_to new_address_path
         end
     end
