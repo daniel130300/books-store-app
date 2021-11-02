@@ -37,7 +37,7 @@ class UsersController < ApplicationController
     end
 
     def my_books
-      @owned_books = Book.joins(sale_books: :sale).where(sales: { user_id: current_user.id }).or(Book.joins(sale_books: :sale).where(sales: { friend_id: current_user.id })).distinct.paginate(page: params[:page], per_page: 5)
+      @owned_books = Book.joins(sale_books: :sale).where(sales: { user_id: current_user.id, friend_id: nil }).or(Book.joins(sale_books: :sale).where(sales: { friend_id: current_user.id })).distinct.paginate(page: params[:page], per_page: 5)
     end
 
     def my_wishlist
